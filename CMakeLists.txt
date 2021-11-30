@@ -17,7 +17,9 @@ add_executable(far_station src/msg_outline/T2msg.cpp
         src/msg_outline/Cmdmsg.h
         src/msg_outline/Cmdmsg.cpp
         src/msg_outline/augermsg.h
-        src/FarProccess.cpp
-        src/FarProccess.h
+        src/NearProccess.cpp
+        src/NearProccess.h
         src/t2li.h
-        src/xbeeinterface.h)
+        src/xbeeinterface.h
+        src/server.cpp
+        src/client.cpp)

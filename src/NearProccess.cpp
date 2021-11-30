@@ -2,22 +2,25 @@
 // Created by robin on 10/21/21.
 //
 #include "t2li.h"
-#include "FarProccess.h"
+#include "NearProccess.h"
 #include <mutex>
 #include <thread>
 #include <iostream>
 #include <fstream>
 #include <filesystem>
 #include <utility>
-#include "processmsg.h"
+#include "packinterface.h"
 
 mutex mu;
 
 bool init() { //set baud rates and check file system layout
     msgToProccess = priority_queue<Generalmsg>();
     msgToPack = priority_queue<Generalmsg>();
-    msgToUnPack = priority_queue<Generalmsg>();
-    msgToSend = priority_queue<Generalmsg>();
+    msgToUnPack = priority_queue<string>();
+    msgToSend = priority_queue<string>();
+    msgToCentral = priority_queue<Generalmsg>();
+    msgFromCentral = priority_queue<Generalmsg>();
+
 
     try{
         filesystem::current_path("/home/$(USER)");
@@ -61,14 +64,14 @@ int main() {//this is called on pi boot
 }
 
 bool fpt() {
-    FarProccess node = FarProccess();
+    NearProccess node = NearProccess();
 
     return node.start();
 
 
 }
 
-int FarProccess::start() {
+int NearProccess::start() {
     bool restartingpi = false;
     while (!restartingpi) {
         if (!msgtoProccessEmpty()) {
@@ -143,6 +146,7 @@ bool msgtoProccessEmpty() {
     return temp;
 }
 
+
 //function to msgToProccess
 void addmsgtoProccess(string incoming) {
 
@@ -152,7 +156,7 @@ void addmsgtoProccess(string incoming) {
     mu.unlock();
 }
 
-Generalmsg FarProccess::getmsgToProccess() {
+Generalmsg NearProccess::getmsgToProccess() {
     Generalmsg msg;
     mu.lock();
     msg = msgToProccess.top();
@@ -162,7 +166,7 @@ Generalmsg FarProccess::getmsgToProccess() {
 }
 
 // functions to msgToPack
-void FarProccess::addmsgtoPack(const Generalmsg& outgoing) {
+void NearProccess::addmsgtoPack(const Generalmsg& outgoing) {
     mu.lock();
     msgToPack.push(outgoing);
     mu.unlock();
@@ -179,7 +183,7 @@ string getmsgToPack() {
 }
 
 //function to msgToSend
-void addmsgtoSend(const Generalmsg& outgoing) {
+void addmsgtoSend(string outgoing) {
     mu.lock();
     msgToSend.push(outgoing);
     mu.unlock();
@@ -188,7 +192,7 @@ void addmsgtoSend(const Generalmsg& outgoing) {
 
 string getmsgToSend() {
     mu.lock();
-    string pack = encrypt(msgToSend.top());
+    string pack = msgToSend.top();
     msgToSend.pop();
     mu.unlock();
     return pack;
@@ -196,8 +200,9 @@ string getmsgToSend() {
 }
 
 //Functions to msgToUnpack
-void addmsgtoUnpack(const Generalmsg& incoming) {
+void addmsgtoUnpack(string incoming) {
     mu.lock();
+
     msgToUnPack.push(incoming);
     mu.unlock();
 
@@ -205,58 +210,84 @@ void addmsgtoUnpack(const Generalmsg& incoming) {
 
 string getmsgToUnpack() {
     mu.lock();
-    string pack = encrypt(msgToUnPack.top());
+    string pack = msgToUnPack.top();
     msgToUnPack.pop();
+    mu.unlock();
+    return pack;
+
+
+}
+
+
+//Functions to msgToUnpack
+void addmsgtoCentral(Generalmsg incoming) {
+    mu.lock();
+    msgToCentral.push(incoming);
+    mu.unlock();
+
+};
+
+Generalmsg getmsgFromCentral() {
+    mu.lock();
+    Generalmsg pack = (msgFromCentral.top());
+    msgToCentral.pop();
     mu.unlock();
     return pack;
 
 }
 
 
+
+
+
+
+
+
+
 //comands to cdas
-string FarProccess::startCDAS() const {
+string NearProccess::startCDAS() const {
     string cmd = "./cdas_su_emu " + std::string(EKITPORT) + " " + std::string(EKITPORT) + " 3000";
     bashCmd(cmd);
     return (cmd);
 }
 
-string FarProccess::startDataCollection() const {
+string NearProccess::startDataCollection() const {
     string cmd = "./cl s " + string(EKITPORT);
     bashCmd(cmd);
     return (cmd);
 }
 
-string FarProccess::rebootStation() const {
+string NearProccess::rebootStation() const {
     string cmd = "./cl r " + string(EKITPORT);
     bashCmd(cmd);
     return (cmd);
 }
 
-string FarProccess::rebootBrodcast() const {
+string NearProccess::rebootBrodcast() const {
     string cmd = "./cl R " + string(EKITPORT);
     bashCmd(cmd);
     return (cmd);
 }
 
-string FarProccess::t3Random() const {
+string NearProccess::t3Random() const {
     string cmd = "./cl t " + string(EKITPORT);
     bashCmd(cmd);
     return (cmd);
 }
 
-string FarProccess::t3Time(const basic_string<char>& time) const {
+string NearProccess::t3Time(const basic_string<char>& time) const {
     string cmd = "./cl T " + time + " " + string(EKITPORT);
     bashCmd(cmd);
     return (cmd);
 }
 
-string FarProccess::os9cmd(const string& input) const {
+string NearProccess::os9cmd(const string& input) const {
     string cmd = "./cl c " + input + " " + string(EKITPORT);
     bashCmd(cmd);
     return (cmd);
 }
 
-string FarProccess::stopCDAS() const {
+string NearProccess::stopCDAS() const {
     string cmd = "./cl S " + string(EKITPORT);
     bashCmd(cmd);
     return (cmd);
@@ -264,7 +295,7 @@ string FarProccess::stopCDAS() const {
 
 
 //piCommand
-int FarProccess::bashCmd(const string& cmd) {
+int NearProccess::bashCmd(const string& cmd) {
     return system(cmd.c_str());
 }
 
@@ -274,7 +305,7 @@ string encrypt(const Generalmsg& generalmsg) {
                   generalmsg.getPayload());
 }
 
-Generalmsg decrypt(const string& input) {
+Generalmsg decrypt(basic_string<char> input) {
     Generalmsg msg;
     string type = input.substr(0, 3);
     unsigned long headerend = input.find(':');

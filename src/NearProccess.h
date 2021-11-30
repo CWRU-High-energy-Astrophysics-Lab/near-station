@@ -13,6 +13,8 @@
 #include "msg_outline/Cmdmsg.h"
 #include "msg_outline/MsgHistory.h"
 #include "msg_outline/Logmsg.h"
+#include "xbeeinterface.h"
+#include "centralinterface.h"
 
 
 #ifndef FAR_STATION_ROBIN_EAD_H
@@ -23,16 +25,18 @@
 using namespace std;
 priority_queue<Generalmsg> msgToProccess;
 priority_queue<Generalmsg> msgToPack;
-priority_queue<Generalmsg> msgToSend;
-priority_queue<Generalmsg> msgToUnPack
+priority_queue<string> msgToSend;
+priority_queue<string> msgToUnPack;
+priority_queue<Generalmsg> msgToCentral;
+priority_queue<Generalmsg> msgFromCentral;
 ;
 bool msgtoProccessEmpty();
 string encrypt(const Generalmsg& msg) ;
-Generalmsg decrypt(const string& msg);
+Generalmsg decrypt(basic_string<char> msg);
 bool send_t3();
 
 bool fpt();
-class FarProccess{
+class NearProccess{
 public:
 
     char *const EKITPORT = getenv("EKITPORT"); //enviormental varible
