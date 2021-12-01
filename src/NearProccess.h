@@ -31,8 +31,8 @@ priority_queue<Generalmsg> msgToCentral;
 priority_queue<Generalmsg> msgFromCentral;
 ;
 bool msgtoProccessEmpty();
-string encrypt(const Generalmsg& msg) ;
-Generalmsg decrypt(basic_string<char> msg);
+//string encrypt(const Generalmsg& msg) ;
+//Generalmsg decrypt(basic_string<char> msg);
 bool send_t3();
 
 bool fpt();
@@ -52,9 +52,9 @@ int start();
 [[nodiscard]] string rebootStation() const;
 [[nodiscard]] string rebootBrodcast() const;
 [[nodiscard]] string t3Random() const;
-[[nodiscard]] string t3Time(const basic_string<char>& time) const;
-[[nodiscard]] string os9cmd(const string& cmd) const;
-[[nodiscard]] string stopCDAS() const;
+ string t3Time(const basic_string<char>& time) const;
+ string os9cmd(const string& cmd) const;
+ [[nodiscard]] string stopCDAS() const;
 
 
 

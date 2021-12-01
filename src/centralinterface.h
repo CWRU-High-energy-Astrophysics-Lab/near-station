@@ -14,3 +14,6 @@ Generalmsg getmsgFromCentral();
 
 // add incoming msg to queue to be unpacked and process
 void addmsgtoCentral(Generalmsg incoming);
+
+string encrypt(const Generalmsg& msg) ;
+Generalmsg decrypt(basic_string<char> msg);
