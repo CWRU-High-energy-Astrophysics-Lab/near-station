@@ -6,6 +6,7 @@
 #include <string>
 #include <cstdlib>
 #include <queue>
+#include <thread>
 
 #include "msg_outline/Generalmsg.h"
 #include "msg_outline/T3msg.h"
@@ -35,7 +36,7 @@ bool msgtoProccessEmpty();
 //Generalmsg decrypt(basic_string<char> msg);
 bool send_t3();
 
-bool fpt();
+bool npt();
 class NearProccess{
 public:
 

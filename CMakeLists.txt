@@ -22,4 +22,7 @@ add_executable(near_station src/msg_outline/T2msg.cpp
         src/t2li.h
         src/xbeeinterface.h
         src/client.cpp
+        src/server.cpp
+        src/networkcom.cpp
+        src/networkcom.h
         )

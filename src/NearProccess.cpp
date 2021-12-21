@@ -47,7 +47,7 @@ bool init() { //set baud rates and check file system layout
 int main() {//this is called on pi boot
     if (init()) {
 
-        thread processThread(fpt);
+        thread processThread(npt);
 
         //Xbee thread
 
@@ -63,7 +63,7 @@ int main() {//this is called on pi boot
     return 1;
 }
 
-bool fpt() {
+bool npt() {
     NearProccess node = NearProccess();
 
     return node.start();
