@@ -103,7 +103,7 @@ void addmsgtoT2PI(Generalmsg incoming){
 string getmsgToStorage(){
     munet.lock();
     string pack = msgToStorage.top();
-    msgToT2PI.pop();
+    msgToStorage.pop();
     munet.unlock();
     return pack;
 }
@@ -119,8 +119,8 @@ void addmsgtoStorage(Generalmsg incoming){
 //returns next msg needed to be sent
 Generalmsg getmsgToNetIn(){
     munet.lock();
-    string pack = msgToStorage.top();
-    msgToT2PI.pop();
+    string pack = msgNetIn.top();
+    msgNetIn.pop();
     munet.unlock();
     return decryptnet(pack);
 }
@@ -128,6 +128,6 @@ Generalmsg getmsgToNetIn(){
 // add incoming msg to queue to be unpacked and process
 void addmsgtoNetIn(string incoming){
     munet.lock();
-    msgToStorage.push(incoming);
+    msgNetIn.push(incoming);
     munet.unlock();
 }

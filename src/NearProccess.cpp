@@ -10,6 +10,7 @@
 #include <filesystem>
 #include <utility>
 #include "packinterface.h"
+#include "networkcom.h"
 
 mutex mu;
 
@@ -24,10 +25,7 @@ bool init() { //set baud rates and check file system layout
 
     try{
         filesystem::current_path("/home/$(USER)");
-        filesystem::current_path("/home/$(USER)/data");
-        filesystem::current_path("/home/$(USER)/data/t2");
-        filesystem::current_path("/home/$(USER)/data/t3");
-        filesystem::current_path("/home/pi/data/log");
+        filesystem::current_path("/home/$(USER)/data/log");
 
         filesystem::current_path("/home/$(USER)/rsato_su_emu");
         filesystem::current_path("/home/$(USER)/rsato_su_emu/bin");
@@ -50,8 +48,12 @@ int main() {//this is called on pi boot
         thread processThread(npt);
 
         //Xbee thread
+        //server thread
+        thread serverThread(startServer);
+
 
         processThread.join();
+
 
 
 
@@ -78,66 +80,48 @@ int NearProccess::start() {
             Generalmsg msg = getmsgToProccess();
             string type = msg.gedID();
             if (type == "T3LI") {
-                T3msg *newmsg = dynamic_cast<T3msg *>(newmsg);
-
-                t3Time(newmsg->getPayload()); // calls cdas to send t3 for time
+                addmsgtoPack(msg);// sent to storGE
 
 
-                //execute t3 collection
-                send_t3();
+
 
             } else if (type.substr(0, 2) == "CMD") {
-                Cmdmsg *msg = dynamic_cast<Cmdmsg *>(msg);
-                if (msg->gedID() == "CMDB") {// is os9 command
-                    os9cmd(msg->getPayload());
-                } else if (msg->gedID() == "CMDR") {
+
+
+                if (msg.gedID() == "CMDN") {
                     restartingpi = true;
-                } else {
-                    bashCmd(msg->getPayload());
                 }
-            } else if (type == "HIST") {
-                MsgHistory *msg = dynamic_cast<MsgHistory *>(msg);
+                else{
+                    addmsgtoPack(msg);
+                }
+            }
+             else if (type == "HIST") {
+
+                addmsgtoPack(msg);
                 //history request, send history
             } else if (type == "T2LI") {
-                T2msg *msg = dynamic_cast<T2msg *>(msg);
+                addmsgtoCentral(msg);
                 //should not be here, report to log
-            } else if (type == "LOGA") {
-                Logmsg *msg = dynamic_cast<Logmsg *>(msg);
+            } else if (type == "LOGB") {
+                addmsgtoPack(msg);
                 // log request, send log file.
             } else {
                 Generalmsg *msg = msg;
                 //add a report to log
             }
         }
-        // get t2 file
-        bashCmd("cp T2_list.out T2_toSend.out");
-        bashCmd("rm T2_list.out");
-
-        string line;
-        ifstream t2File("T2_toSend.out");
-        string payload;
-        if (t2File.is_open()) {
-            while (getline(t2File, line)) {
-                if (line.starts_with("---")) {
-                    T2msg msg(payload);
-                    addmsgtoPack(msg);
-                     payload.clear();
-                } else {
-                    payload.append(line);
-                }
-            }
-            t2File.close();
+        while(ismsgFromNetIn()==true){
+            addmsgtoProccess(encrypt(getmsgToNetIn()));
         }
+
+
 
 
     }
     return restartingpi;
 }
 
-bool send_t3(){
-    int size =0;
-    return true;
-}
+
 
 bool msgtoProccessEmpty() {
     mu.lock();
@@ -242,56 +226,6 @@ Generalmsg getmsgFromCentral() {
 
 
 
-
-
-//comands to cdas
-string NearProccess::startCDAS() const {
-    string cmd = "./cdas_su_emu " + std::string(EKITPORT) + " " + std::string(EKITPORT) + " 3000";
-    bashCmd(cmd);
-    return (cmd);
-}
-
-string NearProccess::startDataCollection() const {
-    string cmd = "./cl s " + string(EKITPORT);
-    bashCmd(cmd);
-    return (cmd);
-}
-
-string NearProccess::rebootStation() const {
-    string cmd = "./cl r " + string(EKITPORT);
-    bashCmd(cmd);
-    return (cmd);
-}
-
-string NearProccess::rebootBrodcast() const {
-    string cmd = "./cl R " + string(EKITPORT);
-    bashCmd(cmd);
-    return (cmd);
-}
-
-string NearProccess::t3Random() const {
-    string cmd = "./cl t " + string(EKITPORT);
-    bashCmd(cmd);
-    return (cmd);
-}
-
-string NearProccess::t3Time(const basic_string<char>& time) const {
-    string cmd = "./cl T " + time + " " + string(EKITPORT);
-    bashCmd(cmd);
-    return (cmd);
-}
-
-string NearProccess::os9cmd(const string& input) const {
-    string cmd = "./cl c " + input + " " + string(EKITPORT);
-    bashCmd(cmd);
-    return (cmd);
-}
-
-string NearProccess::stopCDAS() const {
-    string cmd = "./cl S " + string(EKITPORT);
-    bashCmd(cmd);
-    return (cmd);
-}
 
 
 //piCommand
