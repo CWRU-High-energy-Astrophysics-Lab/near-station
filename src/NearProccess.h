@@ -37,6 +37,8 @@ bool msgtoProccessEmpty();
 bool send_t3();
 
 bool npt();
+
+
 class NearProccess{
 public:
 

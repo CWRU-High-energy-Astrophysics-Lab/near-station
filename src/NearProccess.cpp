@@ -13,6 +13,10 @@
 #include "networkcom.h"
 
 mutex mu;
+bool restartingpi = false;
+bool getRestart(){
+    return restartingpi;
+}
 
 bool init() { //set baud rates and check file system layout
     msgToProccess = priority_queue<Generalmsg>();
@@ -74,7 +78,7 @@ bool npt() {
 }
 
 int NearProccess::start() {
-    bool restartingpi = false;
+
     while (!restartingpi) {
         if (!msgtoProccessEmpty()) {
             Generalmsg msg = getmsgToProccess();
