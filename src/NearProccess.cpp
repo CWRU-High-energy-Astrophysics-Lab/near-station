@@ -30,11 +30,9 @@ bool init() { //set baud rates and check file system layout
     try{
         filesystem::current_path("/home/$(USER)");
         filesystem::current_path("/home/$(USER)/data/log");
+        filesystem::current_path("/home/$(USER)/data/temp");
 
-        filesystem::current_path("/home/$(USER)/rsato_su_emu");
-        filesystem::current_path("/home/$(USER)/rsato_su_emu/bin");
-        filesystem::current_path("/home/$(USER)/rsato_su_emu/src");
-        system("make");
+
 
         filesystem::current_path("/home/$(USER)");
     }
@@ -105,7 +103,7 @@ int NearProccess::start() {
                 //history request, send history
             } else if (type == "T2LI") {
                 addmsgtoCentral(msg);
-                //should not be here, report to log
+
             } else if (type == "LOGB") {
                 addmsgtoPack(msg);
                 // log request, send log file.
