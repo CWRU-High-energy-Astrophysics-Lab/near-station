@@ -60,7 +60,7 @@ int main() {//this is called on pi boot
 
 
 
-//start theads
+
 
 
 
@@ -114,8 +114,8 @@ int NearProccess::start() {
             }
         }
         while(ismsgFromNetIn()!=true){
-            cout << encrypt(getmsgToNetIn());
-            //addmsgtoProccess(encrypt(getmsgToNetIn()));
+
+            addmsgtoProccess(encrypt(getmsgToNetIn()));
         }
 
 
