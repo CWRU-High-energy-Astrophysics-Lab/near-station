@@ -5,6 +5,7 @@
 #include "networkcom.h"
 #include "client.h"
 #include "server.h"
+
 mutex munet;
 bool working = true;
 priority_queue<string> msgToT2PI;
@@ -13,37 +14,41 @@ priority_queue<string> msgToStorage;// send every thing that is not T2
 priority_queue<string> msgNetIn;
 
 
-bool netThread(){
-   // start on thead of incoming
+bool netThread() {
+    // start on thead of incoming
     thread serverthead(startServer);
 
-   //client loop
-    while (working){
-        if(!ismsgToT2PIEmpty()){
-            send("computePi","2000",getmsgToT2PI());
+    //client loop
+    while (working) {
+        if (!ismsgToT2PIEmpty()) {
+            send("computePi", "2000", getmsgToT2PI());
         }
-        if (!ismsgToStorageEmpty()){
-            send("storagePi","2010",getmsgToStorage());
+        if (!ismsgToStorageEmpty()) {
+            send("storagePi", "2010", getmsgToStorage());
         }
     }
     serverthead.join();
     return working;
 }
-void startServer(){
+
+void startServer() {
     recieve();
 }
+
 bool ismsgToT2PIEmpty() {
     munet.lock();
     bool temp = msgToT2PI.empty();
     munet.unlock();
     return temp;
 }
+
 bool ismsgFromNetIn() {
     munet.lock();
-    bool temp =msgNetIn.empty();
+    bool temp = msgNetIn.empty();
     munet.unlock();
     return temp;
 }
+
 bool ismsgToStorageEmpty() {
     munet.lock();
     bool temp = msgToT2PI.empty();
@@ -52,8 +57,7 @@ bool ismsgToStorageEmpty() {
 }
 
 
-
-string encryptnet(const Generalmsg& generalmsg) {
+string encryptnet(const Generalmsg &generalmsg) {
     return string(generalmsg.gedID() + "[" + generalmsg.getRev() + "]:" + to_string(generalmsg.getSize()) +
                   generalmsg.getPayload());
 }
@@ -83,7 +87,7 @@ Generalmsg decryptnet(basic_string<char> input) {
 }
 
 //returns next msg needed to be sent
-string getmsgToT2PI(){
+string getmsgToT2PI() {
     munet.lock();
     string pack = msgToT2PI.top();
     msgToT2PI.pop();
@@ -92,7 +96,7 @@ string getmsgToT2PI(){
 }
 
 // add incoming msg to queue to be unpacked and process
-void addmsgtoT2PI(Generalmsg incoming){
+void addmsgtoT2PI(Generalmsg incoming) {
     munet.lock();
     msgToT2PI.push(encryptnet(incoming));
     munet.unlock();
@@ -100,7 +104,7 @@ void addmsgtoT2PI(Generalmsg incoming){
 
 
 //returns next msg needed to be sent
-string getmsgToStorage(){
+string getmsgToStorage() {
     munet.lock();
     string pack = msgToStorage.top();
     msgToStorage.pop();
@@ -109,7 +113,7 @@ string getmsgToStorage(){
 }
 
 // add incoming msg to queue to be unpacked and process
-void addmsgtoStorage(Generalmsg incoming){
+void addmsgtoStorage(Generalmsg incoming) {
     munet.lock();
     msgToStorage.push(encryptnet(incoming));
     munet.unlock();
@@ -117,16 +121,20 @@ void addmsgtoStorage(Generalmsg incoming){
 
 
 //returns next msg needed to be sent
-Generalmsg getmsgToNetIn(){
+Generalmsg getmsgToNetIn() {
     munet.lock();
+
     string pack = msgNetIn.top();
+
     msgNetIn.pop();
     munet.unlock();
     return decryptnet(pack);
+
+
 }
 
 // add incoming msg to queue to be unpacked and process
-void addmsgtoNetIn(string incoming){
+void addmsgtoNetIn(string incoming) {
     munet.lock();
     msgNetIn.push(incoming);
     munet.unlock();

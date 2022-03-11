@@ -54,7 +54,7 @@ int main() {//this is called on pi boot
         //server thread
         thread serverThread(startServer);
 
-
+        serverThread.join();
         processThread.join();
 
 
@@ -113,8 +113,9 @@ int NearProccess::start() {
                 //add a report to log
             }
         }
-        while(ismsgFromNetIn()==true){
-            addmsgtoProccess(encrypt(getmsgToNetIn()));
+        while(ismsgFromNetIn()!=true){
+            cout << encrypt(getmsgToNetIn());
+            //addmsgtoProccess(encrypt(getmsgToNetIn()));
         }
 
 
