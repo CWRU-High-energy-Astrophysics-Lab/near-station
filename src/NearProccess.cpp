@@ -17,7 +17,7 @@ bool restartingpi = false;
 bool getRestart(){
     return restartingpi;
 }
-
+string user;
 bool init() { //set baud rates and check file system layout
     msgToProccess = priority_queue<Generalmsg>();
     msgToPack = priority_queue<Generalmsg>();
@@ -26,15 +26,16 @@ bool init() { //set baud rates and check file system layout
     msgToCentral = priority_queue<Generalmsg>();
     msgFromCentral = priority_queue<Generalmsg>();
 
-
+    user= "/home/"+ string(getenv("USER"));
     try{
-        filesystem::current_path("/home/$(USER)");
-        filesystem::current_path("/home/$(USER)/data/log");
-        filesystem::current_path("/home/$(USER)/data/temp");
+        filesystem::current_path(user);
+        filesystem::current_path(user+"/data");
+        filesystem::current_path(user+"/data/log");
+        filesystem::current_path(user+"/data/temp");
+        filesystem::current_path(user);
 
 
 
-        filesystem::current_path("/home/$(USER)");
     }
     catch (std::filesystem::filesystem_error const& ex) {
         cout<< "File system not as expected, please check\n";
