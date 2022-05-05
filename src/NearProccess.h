@@ -42,7 +42,7 @@ bool npt();
 class NearProccess{
 public:
 
-    char *const EKITPORT = getenv("EKITPORT"); //enviormental varible
+   char *const EKITPORT = getenv("EKITPORT"); //enviormental varible
 
     int USB{};
 

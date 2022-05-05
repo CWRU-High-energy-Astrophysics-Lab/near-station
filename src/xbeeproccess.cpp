@@ -162,7 +162,7 @@ void readfromNear()
         }
         printf("%s",read_buf);
         addmsgtoUnpack(string(read_buf));
-        memset(&read_buf, '\0', sizeof(read_buf));
+        //memset(&read_buf, '\0', sizeof(read_buf));
     }
 }
 
