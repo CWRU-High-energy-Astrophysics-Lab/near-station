@@ -172,9 +172,9 @@ bool xbeeLoop(){
 
     serial_port = open(port, O_RDWR);
     if(!setup()){return false;}
-    //thread _readfromNear(readfromNear);
-    thread _send(send);
-    //_readfromNear.join();
-    _send.join();
+    thread _readfromNear(readfromNear);
+    //thread _send(send);
+    _readfromNear.join();
+    //_send.join();
     return true;
 }
