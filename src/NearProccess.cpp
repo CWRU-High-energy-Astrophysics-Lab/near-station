@@ -80,7 +80,10 @@ bool npt() {
 int NearProccess::start() {
 
     while (!restartingpi) {
-        addmsgtoProccess(getmsgToUnpack());
+        auto msg = getmsgToUnpack();
+        if(msg.length()>0){
+            addmsgtoProccess(msg);
+        }
         if (!msgtoProccessEmpty()) {
             Generalmsg msg = getmsgToProccess();
             string type = msg.gedID();
