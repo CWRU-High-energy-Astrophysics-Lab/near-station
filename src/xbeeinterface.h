@@ -13,6 +13,6 @@ string getmsgToSend();
 
 // add incoming msg to queue to be unpacked and process
 void addmsgtoUnpack(string incoming);
-bool startXbee();
+bool xbeeLoop();
 
 bool getRestart();

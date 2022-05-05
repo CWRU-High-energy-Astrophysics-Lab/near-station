@@ -51,6 +51,7 @@ int main() {//this is called on pi boot
         thread processThread(npt);
 
         //Xbee thread
+        thread xbeeThread(xbeeLoop);
         //server thread
         thread serverThread(startServer);
 
