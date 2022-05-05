@@ -89,7 +89,7 @@ void changebm() {
 void send() {
     while (!getRestart()) {
         auto msg = getmsgToSend().c_str();
-        /* if (strlen(msg) != 0) {
+         if (strlen(msg) != 0) {
             tsize = tsize + sizeof(byte);
 
             char byte[strlen(msg)];
@@ -128,7 +128,7 @@ void send() {
                 strcpy(B2, byte);
             }
             changebm();
-        } */
+        }
     }
 }
 
@@ -143,7 +143,7 @@ void readfromNear() {
         } else if (read_buf[0] == 'T') {
             s = 1;
         }
-        printf("%s", read_buf);
+        //printf("%s", read_buf);
         addmsgtoUnpack(string(read_buf));
         //memset(&read_buf, '\0', sizeof(read_buf));
     }

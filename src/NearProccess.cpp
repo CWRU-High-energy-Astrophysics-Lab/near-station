@@ -83,6 +83,7 @@ int NearProccess::start() {
         if (!msgtoProccessEmpty()) {
             Generalmsg msg = getmsgToProccess();
             string type = msg.gedID();
+            printf("%s", "msg recieved");
             if (type == "T3LI") {
                 addmsgtoPack(msg);// sent to storGE
 
