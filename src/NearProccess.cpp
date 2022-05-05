@@ -182,8 +182,11 @@ void addmsgtoSend(string outgoing) {
 
 string getmsgToSend() {
     mu.lock();
-    string pack = msgToSend.top();
-    msgToSend.pop();
+    string pack;
+    if(!msgToSend.empty()) {
+        string pack = msgToSend.top();
+        msgToSend.pop();
+    }
     mu.unlock();
     return pack;
 
