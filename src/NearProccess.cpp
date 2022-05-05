@@ -135,6 +135,7 @@ bool msgtoProccessEmpty() {
     mu.lock();
     bool temp = msgToProccess.empty();
     mu.unlock();
+    printf("hi");
     return temp;
 }
 
