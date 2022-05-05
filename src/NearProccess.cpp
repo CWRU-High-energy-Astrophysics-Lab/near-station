@@ -135,7 +135,8 @@ bool msgtoProccessEmpty() {
     mu.lock();
     bool temp = msgToProccess.empty();
     mu.unlock();
-    std::cout << temp;
+    if(temp == false){
+    std::cout << temp;}
     return temp;
 }
 
