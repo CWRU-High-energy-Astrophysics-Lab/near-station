@@ -155,6 +155,11 @@ void addmsgtoProccess(string incoming) {
 Generalmsg NearProccess::getmsgToProccess() {
     Generalmsg msg;
     mu.lock();
+
+    if(!msgToProccess.empty()) {
+        msg = msgToProccess.top();
+        msgToProccess.pop();
+    }
     msg = msgToProccess.top();
     msgToProccess.pop();
     mu.unlock();
@@ -212,7 +217,7 @@ string getmsgToUnpack() {
     string pack;
     if(!msgToUnPack.empty()) {
         string pack = msgToUnPack.top();
-        msgToSend.pop();
+        msgToUnPack.pop();
     }
     mu.unlock();
     return pack;
