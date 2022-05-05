@@ -82,6 +82,7 @@ int NearProccess::start() {
     while (!restartingpi) {
         auto msg = getmsgToUnpack();
         if(msg.length()>0){
+            printf("add");
             addmsgtoProccess(msg);
         }
         if (!msgtoProccessEmpty()) {
