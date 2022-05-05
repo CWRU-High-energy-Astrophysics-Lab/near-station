@@ -169,6 +169,7 @@ void readfromNear()
 
 
 bool xbeeLoop(){
+    return true;
     serial_port = open(port, O_RDWR);
     if(!setup()){return false;}
     thread _readfromNear(readfromNear);
