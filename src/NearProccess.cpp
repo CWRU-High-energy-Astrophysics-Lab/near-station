@@ -80,7 +80,7 @@ bool npt() {
 int NearProccess::start() {
 
     while (!restartingpi) {
-        printf(reinterpret_cast<const char *>(!msgtoProccessEmpty()));
+        addmsgtoProccess(getmsgToUnpack());
         if (!msgtoProccessEmpty()) {
             Generalmsg msg = getmsgToProccess();
             string type = msg.gedID();
@@ -135,8 +135,7 @@ bool msgtoProccessEmpty() {
     mu.lock();
     bool temp = msgToProccess.empty();
     mu.unlock();
-    if(temp == false){
-    std::cout << temp;}
+
     return temp;
 }
 
@@ -207,8 +206,11 @@ void addmsgtoUnpack(string incoming) {
 
 string getmsgToUnpack() {
     mu.lock();
-    string pack = msgToUnPack.top();
-    msgToUnPack.pop();
+    string pack;
+    if(!msgToUnPack.empty()) {
+        string pack = msgToUnPack.top();
+        msgToSend.pop();
+    }
     mu.unlock();
     return pack;
 
