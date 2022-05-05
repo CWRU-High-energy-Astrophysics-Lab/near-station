@@ -80,6 +80,7 @@ bool npt() {
 int NearProccess::start() {
 
     while (!restartingpi) {
+        printf("waithing");
         if (!msgtoProccessEmpty()) {
             Generalmsg msg = getmsgToProccess();
             string type = msg.gedID();
