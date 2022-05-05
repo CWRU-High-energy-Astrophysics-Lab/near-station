@@ -89,7 +89,7 @@ void changebm() {
 void send() {
     while (!getRestart()) {
         auto msg = getmsgToSend().c_str();
-        if (strlen(msg) != 0) {
+        /* if (strlen(msg) != 0) {
             tsize = tsize + sizeof(byte);
 
             char byte[strlen(msg)];
@@ -128,7 +128,7 @@ void send() {
                 strcpy(B2, byte);
             }
             changebm();
-        }
+        } */
     }
 }
 
