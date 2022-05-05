@@ -98,7 +98,8 @@ void send()
 {
     while(!getRestart())
     {
-        auto byte = getmsgToSend().c_str();
+        //auto byte = getmsgToSend().c_str();
+        char byte[]={'t', 'a', 'i', 'l', '\n' };
         tsize=tsize+sizeof(byte);
 
 
@@ -173,8 +174,8 @@ bool xbeeLoop(){
     serial_port = open(port, O_RDWR);
     if(!setup()){return false;}
     thread _readfromNear(readfromNear);
-    //thread _send(send);
+    thread _send(send);
     _readfromNear.join();
-    //_send.join();
+    _send.join();
     return true;
 }
