@@ -81,7 +81,7 @@ int NearProccess::start() {
 
     while (!restartingpi) {
         auto msg = getmsgToUnpack();
-        std::cout<< msg;
+        std::cout<< msg.length();
         if(msg.length()>0){
             printf("add");
             addmsgtoProccess(msg);
