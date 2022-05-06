@@ -207,7 +207,7 @@ string getmsgToSend() {
 
 //Functions to msgToUnpack
 void addmsgtoUnpack(string incoming) {
-    std::cout<< incoming;
+    //std::cout<< incoming;
     mu.lock();
 
     msgToUnPack.push(incoming);
@@ -223,6 +223,7 @@ string getmsgToUnpack() {
         msgToUnPack.pop();
     }
     mu.unlock();
+    std::cout<< pack.length();
     if ( pack.length()>0){
         std::cout<<pack;}
     return pack;
