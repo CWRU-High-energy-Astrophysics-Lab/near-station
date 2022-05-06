@@ -81,7 +81,7 @@ bool npt() {
 int NearProccess::start() {
 
     while (!restartingpi) {
-        sleep(1);
+        sleep(0.7);
         auto msg = getmsgToUnpack();
 
         if(msg.length()>0){
