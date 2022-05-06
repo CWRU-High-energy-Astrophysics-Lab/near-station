@@ -11,6 +11,7 @@
 #include <utility>
 #include "packinterface.h"
 #include "networkcom.h"
+#include <unistd.h>
 
 mutex mu;
 bool restartingpi = false;
@@ -80,6 +81,7 @@ bool npt() {
 int NearProccess::start() {
 
     while (!restartingpi) {
+        sleep(1);
         auto msg = getmsgToUnpack();
 
         if(msg.length()>0){
