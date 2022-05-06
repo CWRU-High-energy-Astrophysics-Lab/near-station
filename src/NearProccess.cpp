@@ -223,7 +223,7 @@ string getmsgToUnpack() {
         msgToUnPack.pop();
     }
     mu.unlock();
-    std::cout<<pack;
+    std::cout<<pack.length();
     return pack;
 
 
