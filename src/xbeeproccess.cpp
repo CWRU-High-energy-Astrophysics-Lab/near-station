@@ -34,9 +34,9 @@ int tsize = 0;
 
 
 bool setup() {
-    if (tcgetattr(serial_port, &tty) != 0) {
+    if(tcgetattr(serial_port, &tty) != 0)
+    {
         printf("Error %i from tcgetattr: %s\n", errno, strerror(errno));
-        return false;
         //return 1;
     }
 
@@ -53,8 +53,7 @@ bool setup() {
     tty.c_lflag &= ~ECHONL; // Disable new-line echo
     tty.c_lflag &= ~ISIG; // Disable interpretation of INTR, QUIT and SUSP
     tty.c_iflag &= ~(IXON | IXOFF | IXANY); // Turn off s/w flow ctrl
-    tty.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | IGNCR |
-                     ICRNL); // Disable any special handling of received bytes
+    tty.c_iflag &= ~(IGNBRK|BRKINT|PARMRK|ISTRIP|INLCR|IGNCR|ICRNL); // Disable any special handling of received bytes
 
     tty.c_oflag &= ~OPOST; // Prevent special interpretation of output bytes (e.g. newline chars)
     tty.c_oflag &= ~ONLCR; // Prevent conversion of newline to carriage return/line feed
@@ -71,93 +70,39 @@ bool setup() {
     // Save tty settings, also checking for error
     if (tcsetattr(serial_port, TCSANOW, &tty) != 0) {
         printf("Error %i from tcsetattr: %s\n", errno, strerror(errno));
-        //return 1;
         return false;
     }
     return true;
 }
-
-void changebm() {
-    if (bm == 1) {
-        bm = 2;
-    } else {
-        bm = 1;
-    }
+void send()
+{
+    char write_buf [256]; //WARNING : The last character must be change line character!
+    string msg=getmsgToSend();
+    strcpy(write_buf,msg.c_str());
+    write(serial_port, write_buf, sizeof(write_buf));
 }
 
 
-void send() {
-    while (!getRestart()) {
-        auto msg = getmsgToSend().c_str();
-         if (strlen(msg) != 0) {
-            tsize = tsize + sizeof(byte);
 
-            char byte[strlen(msg)];
-            tsize = tsize + sizeof(byte);
-            for (int i = 0; i < sizeof(byte); i++) {
-                byte[i] = msg[i];
-                //printf("%d",i);
-            }
-            delete (msg);
-            char tail[] = {'t', 'a', 'i', 'l', '\n'};
-            if (s == 1) {
-                //strcpy(byte,T2all_l[n]);
-                if (byte[0] == '-') {
-                    write(serial_port, tail, sizeof(tail)); //Send tail.
-                    printf("Size : %d\n", tsize);
-                    tsize = 0;
-                    sleep(1);
-                } else {
-                    write(serial_port, byte, sizeof(byte)); //Send byte.
-                }
-            } else //s is not 1, Send SLEEPING.
-            {
-                if (byte[0] == '-') {
-                    //printf("SLEEPING:%d\n",n);
-                    char sleeping[] = {'S', 'L', 'E', 'E', 'P', 'I', 'N', 'G', '\n'};
-                    write(serial_port, sleeping, sizeof(sleeping));
-                    sleep(1);
-                }
-            }
-            n = n + 1;
-            if (bm == 1) {
-                char B1[sizeof(byte)];
-                strcpy(B1, byte);
-            } else {
-                char B2[sizeof(byte)];
-                strcpy(B2, byte);
-            }
-            changebm();
-        }
-    }
-}
-
-
-void readfromNear() {
+string read()
+{
     int num_bytes;
-    char read_buf[256];
-    while (!getRestart()) {
-        num_bytes = read(serial_port, read_buf, sizeof(read_buf));
-        if (read_buf[0] == 'S') {
-            s = 0;
-        } else if (read_buf[0] == 'T') {
-            s = 1;
-        }
-        //printf("%s", read_buf);
-
-        addmsgtoUnpack(string(read_buf));
-        //memset(&read_buf, '\0', sizeof(read_buf));
-    }
+    char read_buf [256];
+    num_bytes = read(serial_port, &read_buf, sizeof(read_buf));
+    string readN=read_buf;
+    return readN;
 }
+
+
 
 
 bool xbeeLoop() {
 
     serial_port = open(port, O_RDWR);
     if (!setup()) { return false; }
-    thread _readfromNear(readfromNear);
-    thread _send(send);
-    _readfromNear.join();
-    _send.join();
-    return true;
+    while(!getRestart()){
+        addmsgtoUnpack(read());
+        send();
+    }
+        return true;
 }
