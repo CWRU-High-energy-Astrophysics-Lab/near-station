@@ -90,6 +90,7 @@ string read()
     char read_buf [256];
     num_bytes = read(serial_port, &read_buf, sizeof(read_buf));
     string readN=read_buf;
+    printf(readN.c_str());
     return readN;
 }
 
