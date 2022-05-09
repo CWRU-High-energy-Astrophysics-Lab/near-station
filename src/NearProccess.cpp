@@ -229,9 +229,8 @@ string getmsgToUnpack() {
         msgToUnPack.pop();
     }
     mu4.unlock();
+    std::cout<<pack;
 
-    if ( pack.length()>0){
-        std::cout<<pack;}
     return pack;
 
 
