@@ -85,7 +85,7 @@ bool npt() {
 int NearProccess::start() {
 
     while (!restartingpi) {
-        
+        std::cout<< msgToUnPack.size();
         auto msg = getmsgToUnpack(); // this is always returning an empty string
 
         if(msg.length()>0){
