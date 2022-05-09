@@ -92,7 +92,7 @@ int NearProccess::start() {
         if(!msg.empty()) {
             addmsgtoProccess(msg);
         }
-        if (!msgtoProccessEmpty()) {
+      /*  if (!msgtoProccessEmpty()) {
             Generalmsg msg = getmsgToProccess();
             string type = msg.gedID();
             printf("%s", "msg recieved");
@@ -127,7 +127,7 @@ int NearProccess::start() {
                 std::cout << encrypt(msg);
                 //add a report to log
             }
-        }
+        }*/
         while(ismsgFromNetIn()!=true){
 
             addmsgtoProccess(encrypt(getmsgToNetIn()));
