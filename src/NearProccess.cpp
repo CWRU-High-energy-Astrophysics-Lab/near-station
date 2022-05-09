@@ -89,7 +89,7 @@ int NearProccess::start() {
         auto msg = getmsgToUnpack(); // this is always returning an empty string
 
         if(msg.length()>0){
-            std::cout<< "add"<< std::endl;
+            std::cout<< "add\n";
             addmsgtoProccess(msg);
         }
         if (!msgtoProccessEmpty()) {
@@ -168,8 +168,7 @@ Generalmsg NearProccess::getmsgToProccess() {
         msg = msgToProccess.top();
         msgToProccess.pop();
     }
-    msg = msgToProccess.top();
-    msgToProccess.pop();
+
     mu.unlock();
     return msg;
 }
@@ -230,7 +229,7 @@ string getmsgToUnpack() {
         msgToUnPack.pop();
     }
     mu4.unlock();
-    std::cout<<pack<< std::endl;
+    std::cout<<pack;
 
     return pack;
 
