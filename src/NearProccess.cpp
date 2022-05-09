@@ -14,6 +14,10 @@
 #include <unistd.h>
 
 mutex mu;
+mutex mu2;
+mutex mu3;
+mutex mu4;
+mutex mu5;
 bool restartingpi = false;
 bool getRestart(){
     return restartingpi;
@@ -172,37 +176,37 @@ Generalmsg NearProccess::getmsgToProccess() {
 
 // functions to msgToPack
 void NearProccess::addmsgtoPack(const Generalmsg& outgoing) {
-    mu.lock();
+    mu2.lock();
     msgToPack.push(outgoing);
-    mu.unlock();
+    mu2.unlock();
 
 };
 
 string getmsgToPack() {
-    mu.lock();
+    mu2.lock();
     string pack = encrypt(msgToPack.top());
     msgToPack.pop();
-    mu.unlock();
+    mu2.unlock();
     return pack;
 
 }
 
 //function to msgToSend
 void addmsgtoSend(string outgoing) {
-    mu.lock();
+    mu3.lock();
     msgToSend.push(outgoing);
-    mu.unlock();
+    mu3.unlock();
 
 };
 
 string getmsgToSend() {
-    mu.lock();
+    mu3.lock();
     string pack;
     if(!msgToSend.empty()) {
         string pack = msgToSend.top();
         msgToSend.pop();
     }
-    mu.unlock();
+    mu3.unlock();
     return pack;
 
 }
@@ -210,21 +214,21 @@ string getmsgToSend() {
 //Functions to msgToUnpack
 void addmsgtoUnpack(string incoming) {
     //std::cout<< incoming;
-    mu.lock();
+    mu4.lock();
 
     msgToUnPack.push(incoming);
-    mu.unlock();
+    mu4.unlock();
 
 };
 
 string getmsgToUnpack() {
-    mu.lock();
+    mu4.lock();
     string pack;
     if(!msgToUnPack.empty()) {
         string pack = msgToUnPack.top();
         msgToUnPack.pop();
     }
-    mu.unlock();
+    mu4.unlock();
 
     if ( pack.length()>0){
         std::cout<<pack;}
@@ -236,17 +240,17 @@ string getmsgToUnpack() {
 
 //Functions to msgToUnpack
 void addmsgtoCentral(Generalmsg incoming) {
-    mu.lock();
+    mu5.lock();
     msgToCentral.push(incoming);
-    mu.unlock();
+    mu5.unlock();
 
 };
 
 Generalmsg getmsgFromCentral() {
-    mu.lock();
+    mu5.lock();
     Generalmsg pack = (msgFromCentral.top());
     msgToCentral.pop();
-    mu.unlock();
+    mu5.unlock();
     return pack;
 
 }
