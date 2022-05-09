@@ -87,7 +87,7 @@ int NearProccess::start() {
     while (!restartingpi) {
         
         auto msg = getmsgToUnpack();
-        std::cout<< msg<< std::endl;
+
         if(msg.length()>0){
             std::cout<< "add"<< std::endl;
             addmsgtoProccess(msg);
@@ -230,7 +230,7 @@ string getmsgToUnpack() {
         msgToUnPack.pop();
     }
     mu4.unlock();
-    //std::cout<<pack;
+    std::cout<<pack;
 
     return pack;
 
