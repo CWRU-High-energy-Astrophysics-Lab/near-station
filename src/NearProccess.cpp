@@ -213,7 +213,7 @@ string getmsgToSend() {
 
 //Functions to msgToUnpack
 void addmsgtoUnpack(string incoming) {
-    std::cout<< incoming;
+    //std::cout<< incoming;
     mu4.lock();
 
     msgToUnPack.push(incoming);
