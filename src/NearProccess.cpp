@@ -89,9 +89,9 @@ int NearProccess::start() {
         auto msg = getmsgToUnpack(); // this is always returning an empty string
 
 
-
-        addmsgtoProccess(msg);
-
+        if(!msg.empty()) {
+            addmsgtoProccess(msg);
+        }
         if (!msgtoProccessEmpty()) {
             Generalmsg msg = getmsgToProccess();
             string type = msg.gedID();
