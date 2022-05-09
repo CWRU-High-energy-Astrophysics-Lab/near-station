@@ -225,7 +225,7 @@ string getmsgToUnpack() {
     mu4.lock();
     string pack;
     if(!msgToUnPack.empty()) {
-        std::cout<< "hi";
+        std::cout<< "hi"<< std::endl;
         string pack = msgToUnPack.top();
         msgToUnPack.pop();
     }
