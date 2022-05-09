@@ -85,13 +85,13 @@ bool npt() {
 int NearProccess::start() {
 
     while (!restartingpi) {
-        //std::cout<< msgToUnPack.size();
+        std::cout<< msgToUnPack.size();
         auto msg = getmsgToUnpack(); // this is always returning an empty string
 
 
 
         addmsgtoProccess(msg);
-        /*
+
         if (!msgtoProccessEmpty()) {
             Generalmsg msg = getmsgToProccess();
             string type = msg.gedID();
@@ -127,7 +127,7 @@ int NearProccess::start() {
                 std::cout << encrypt(msg);
                 //add a report to log
             }
-        }*/
+        }
         while(ismsgFromNetIn()!=true){
 
             addmsgtoProccess(encrypt(getmsgToNetIn()));
