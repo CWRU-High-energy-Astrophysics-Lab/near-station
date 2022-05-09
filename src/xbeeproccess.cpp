@@ -103,8 +103,8 @@ bool xbeeLoop() {
     if (!setup()) { return false; }
     while(!getRestart()){
         auto msg = read();
-        if(!msg.empty()){
-        addmsgtoUnpack(msg);}
+
+        addmsgtoUnpack(msg);
         send();
     }
         return true;
