@@ -230,7 +230,7 @@ string getmsgToUnpack() {
         msgToUnPack.pop();
     }
     mu4.unlock();
-    std::cout<<pack;
+    //std::cout<<pack;
 
     return pack;
 
