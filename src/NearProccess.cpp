@@ -86,12 +86,12 @@ int NearProccess::start() {
 
     while (!restartingpi) {
         std::cout<< msgToUnPack.size();
-        auto msg = getmsgToUnpack(); // this is always returning an empty string
+        /*auto msg = getmsgToUnpack(); // this is always returning an empty string
 
         if(msg.length()>0){
             std::cout<< "add\n";
             addmsgtoProccess(msg);
-        }
+        }*/
         if (!msgtoProccessEmpty()) {
             Generalmsg msg = getmsgToProccess();
             string type = msg.gedID();
