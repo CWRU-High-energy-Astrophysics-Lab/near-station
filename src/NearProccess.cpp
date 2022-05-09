@@ -86,6 +86,7 @@ int NearProccess::start() {
 
     while (!restartingpi) {
         std::cout<< msgToUnPack.size();
+        std::cout<< msgToProccess.size();
         auto msg = getmsgToUnpack(); // this is always returning an empty string
 
 
