@@ -102,7 +102,9 @@ bool xbeeLoop() {
     serial_port = open(port, O_RDWR);
     if (!setup()) { return false; }
     while(!getRestart()){
-        addmsgtoUnpack(read());
+        auto msg = read();
+        if(!msg.empty()){
+        addmsgtoUnpack(msg);}
         send();
     }
         return true;
