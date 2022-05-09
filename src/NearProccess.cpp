@@ -89,7 +89,7 @@ int NearProccess::start() {
         auto msg = getmsgToUnpack();
         //printf(msg.c_str());
         if(msg.length()>0){
-            printf("add");
+            std::cout<< "add"<< std::endl;
             addmsgtoProccess(msg);
         }
         if (!msgtoProccessEmpty()) {
@@ -225,7 +225,7 @@ string getmsgToUnpack() {
     mu4.lock();
     string pack;
     if(!msgToUnPack.empty()) {
-        std::cout<< "hi"<< std::endl;
+
         string pack = msgToUnPack.top();
         msgToUnPack.pop();
     }
