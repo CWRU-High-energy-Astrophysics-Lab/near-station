@@ -24,12 +24,12 @@
 #endif //FAR_STATION_ROBIN_EAD_H
 
 
-priority_queue<Generalmsg> msgToProccess;
-priority_queue<Generalmsg> msgToPack;
-priority_queue<string> msgToSend;
-priority_queue<string> msgToUnPack;
-priority_queue<Generalmsg> msgToCentral;
-priority_queue<Generalmsg> msgFromCentral;
+std::priority_queue<Generalmsg> msgToProccess;
+std::priority_queue<Generalmsg> msgToPack;
+std::priority_queue<std::string> msgToSend;
+std::priority_queue<std::string> msgToUnPack;
+std::priority_queue<Generalmsg> msgToCentral;
+std::priority_queue<Generalmsg> msgFromCentral;
 ;
 bool msgtoProccessEmpty();
 //string encrypt(const Generalmsg& msg) ;
@@ -59,13 +59,13 @@ static void addmsgtoPack(const Generalmsg& outgoing);
 
 
 //piCommand
-static int bashCmd(const string& cmd);
+static int bashCmd(const std::string& cmd);
 
 
 
-string getT2();
+std::string getT2();
 
-string getT3();
+std::string getT3();
 
 
 
