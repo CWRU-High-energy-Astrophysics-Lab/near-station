@@ -58,8 +58,8 @@ bool ismsgToStorageEmpty() {
 
 
 std::string encryptnet(const Generalmsg &generalmsg) {
-    return std::string(generalmsg.gedID() + "[" + generalmsg.getRev() + "]:" + std::to_string(generalmsg.getSize()) +
-                  generalmsg.getPayload());
+    return std::string(generalmsg.getID() + "[" + generalmsg.getRev() + "]:" + std::to_string(generalmsg.getSize()) +
+                       generalmsg.getPayload());
 }
 
 Generalmsg decryptnet(std::string input) {

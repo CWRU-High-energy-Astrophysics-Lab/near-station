@@ -10,7 +10,7 @@ unsigned long Generalmsg::getSize() const {
     return payload.length(); //one character is one byte
 }
 
-std::string Generalmsg::gedID() const {
+std::string Generalmsg::getID() const {
     return id;
 }
 

@@ -11,7 +11,7 @@ class Generalmsg {
 public:
     Generalmsg();
     [[nodiscard]] int getweight() const;
-    [[nodiscard]] std::string gedID() const;
+    [[nodiscard]] std::string getID() const;
     [[nodiscard]] std::string getRev() const;
     [[nodiscard]] unsigned long getSize() const; // in bytes
     [[nodiscard]] virtual std::string getPayload() const;

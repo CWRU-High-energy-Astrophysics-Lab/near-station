@@ -96,7 +96,7 @@ int NearProccess::start() {
         if (!msgtoProccessEmpty()) {
 
              Generalmsg msg = getmsgToProccess();
-            std::string type = msg.gedID();
+            std::string type = msg.getID();
 
 
              if (type == "T3LI") {
@@ -108,7 +108,7 @@ int NearProccess::start() {
              } else if (type.substr(0, 2) == "CMD") {
 
 
-                 if (msg.gedID() == "CMDN") {
+                 if (msg.getID() == "CMDN") {
                      restartingpi = true;
                  }
                  else{
@@ -267,13 +267,13 @@ int NearProccess::bashCmd(const std::string &cmd) {
 
 
 std::string encrypt(const Generalmsg &generalmsg) {
-    return std::string(generalmsg.gedID() + "[" + generalmsg.getRev() + "]:" + std::to_string(generalmsg.getSize()) +
+    return std::string(generalmsg.getID() + "[" + generalmsg.getRev() + "]:" + std::to_string(generalmsg.getSize()) +
                   generalmsg.getPayload());
 }
 
 Generalmsg decrypt(std::string input) {
     Generalmsg msg;
-    std::string type = input.substr(0, 3);
+    std::string type = input.substr(0, 4);
     unsigned long headerend = input.find(':');
     try {
         std::string payload = input.substr(headerend+1);
