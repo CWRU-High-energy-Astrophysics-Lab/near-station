@@ -89,7 +89,7 @@ int NearProccess::start() {
 
         if (msg !="") {
             std::cout << "testpoint ";
-            addmsgtoProccess(msg);
+            //addmsgtoProccess(msg);
             //std::cout<<"test point2";
         }
 
