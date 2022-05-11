@@ -13,11 +13,11 @@
 #include "networkcom.h"
 
 
-mutex mu;
-mutex mu2;
-mutex mu3;
-mutex mu4;
-mutex mu5;
+std::mutex mu;
+std::mutex mu2;
+std::mutex mu3;
+std::mutex mu4;
+std::mutex mu5;
 bool restartingpi = false;
 
 bool getRestart() {
@@ -27,25 +27,25 @@ bool getRestart() {
 std::string user;
 
 bool init() { //set baud rates and check file system layout
-    msgToProccess = priority_queue<Generalmsg>();
-    msgToPack = priority_queue<Generalmsg>();
-    msgToUnPack = priority_queue<std::string>();
-    msgToSend = priority_queue<std::string>();
-    msgToCentral = priority_queue<Generalmsg>();
-    msgFromCentral = priority_queue<Generalmsg>();
+    msgToProccess = std::priority_queue<Generalmsg>();
+    msgToPack = std::priority_queue<Generalmsg>();
+    msgToUnPack = std::priority_queue<std::string>();
+    msgToSend = std::priority_queue<std::string>();
+    msgToCentral = std::priority_queue<Generalmsg>();
+    msgFromCentral = std::priority_queue<Generalmsg>();
 
     user = "/home/" + std::string(getenv("USER"));
     try {
-        filesystem::current_path(user);
-        filesystem::current_path(user + "/data");
-        filesystem::current_path(user + "/data/log");
-        filesystem::current_path(user + "/data/temp");
-        filesystem::current_path(user);
+        std::filesystem::current_path(user);
+        std::filesystem::current_path(user + "/data");
+        std::filesystem::current_path(user + "/data/log");
+        std::filesystem::current_path(user + "/data/temp");
+        std::filesystem::current_path(user);
 
 
     }
     catch (std::filesystem::filesystem_error const &ex) {
-        cout << "File system not as expected, please check\n";
+        std::cout << "File system not as expected, please check\n";
         return false;
     }
 
@@ -55,12 +55,12 @@ bool init() { //set baud rates and check file system layout
 int main() {//this is called on pi boot
     if (init()) {
 
-        thread processThread(npt);
+        std::thread processThread(npt);
 
         //Xbee thread
-        thread xbeeThread(xbeeLoop);
+        std::thread xbeeThread(xbeeLoop);
         //server thread
-        thread serverThread(startServer);
+        std::thread serverThread(startServer);
 
         serverThread.join();
         processThread.join();
@@ -90,13 +90,13 @@ int NearProccess::start() {
         if (!msg.empty()) {
 
             addmsgtoProccess(msg);
-            //std::cout<<"test point2";
+
         }
 
-        /*if (!msgtoProccessEmpty()) {
+        if (!msgtoProccessEmpty()) {
              std::cout<< "1";
              Generalmsg msg = getmsgToProccess();
-             string type = msg.gedID();
+            std::string type = msg.gedID();
              std::cout<< "2";
              printf("%s", "msg recieved");
              if (type == "T3LI") {
@@ -134,7 +134,7 @@ int NearProccess::start() {
          while(ismsgFromNetIn()!=true){
 
              addmsgtoProccess(encrypt(getmsgToNetIn()));
-         }*/
+         }
 
 
 
@@ -185,7 +185,7 @@ void NearProccess::addmsgtoPack(const Generalmsg &outgoing) {
 
 };
 
-string getmsgToPack() {
+std::string getmsgToPack() {
     mu2.lock();
     std::string pack = encrypt(msgToPack.top());
     msgToPack.pop();
@@ -195,16 +195,16 @@ string getmsgToPack() {
 }
 
 //function to msgToSend
-void addmsgtoSend(string outgoing) {
+void addmsgtoSend(std::string outgoing) {
     mu3.lock();
     msgToSend.push(outgoing);
     mu3.unlock();
 
 };
 
-string getmsgToSend() {
+std::string getmsgToSend() {
     mu3.lock();
-    string pack;
+    std::string pack;
     if (!msgToSend.empty()) {
         pack = msgToSend.top();
         msgToSend.pop();
@@ -215,7 +215,7 @@ string getmsgToSend() {
 }
 
 //Functions to msgToUnpack
-void addmsgtoUnpack(string incoming) {
+void addmsgtoUnpack(std::string incoming) {
 
     mu4.lock();
 
@@ -224,9 +224,9 @@ void addmsgtoUnpack(string incoming) {
 
 };
 
-string getmsgToUnpack() {
+std::string getmsgToUnpack() {
     mu4.lock();
-    string pack;
+    std::string pack;
     if (!msgToUnPack.empty()) {
 
         pack = msgToUnPack.top();
@@ -260,13 +260,13 @@ Generalmsg getmsgFromCentral() {
 
 
 //piCommand
-int NearProccess::bashCmd(const string &cmd) {
+int NearProccess::bashCmd(const std::string &cmd) {
     return system(cmd.c_str());
 }
 
 
-string encrypt(const Generalmsg &generalmsg) {
-    return string(generalmsg.gedID() + "[" + generalmsg.getRev() + "]:" + to_string(generalmsg.getSize()) +
+std::string encrypt(const Generalmsg &generalmsg) {
+    return std::string(generalmsg.gedID() + "[" + generalmsg.getRev() + "]:" + std::to_string(generalmsg.getSize()) +
                   generalmsg.getPayload());
 }
 
