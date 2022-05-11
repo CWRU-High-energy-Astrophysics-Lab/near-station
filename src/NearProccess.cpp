@@ -92,7 +92,7 @@ int NearProccess::start() {
 
         if(!msg.empty()) {
             std::cout<< "add";
-            addmsgtoProccess(msg);
+            //addmsgtoProccess(msg);
         }
       /*  if (!msgtoProccessEmpty()) {
             Generalmsg msg = getmsgToProccess();
