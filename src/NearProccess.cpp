@@ -88,11 +88,12 @@ int NearProccess::start() {
 
         auto msg = getmsgToUnpack();
 
-
+        std::cout<< "1";
         if(!msg.empty()) {
-            std::cout<< "add";
+
             addmsgtoProccess(msg);
         }
+        std::cout<< "2";
        if (!msgtoProccessEmpty()) {
             Generalmsg msg = getmsgToProccess();
             string type = msg.gedID();
