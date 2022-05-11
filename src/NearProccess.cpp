@@ -91,6 +91,7 @@ int NearProccess::start() {
 
 
         if(!msg.empty()) {
+            std::cout<< "add";
             addmsgtoProccess(msg);
         }
       /*  if (!msgtoProccessEmpty()) {
