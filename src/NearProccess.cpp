@@ -91,7 +91,7 @@ int NearProccess::start() {
 
         std::cout<< msg;
 
-        if(msg.length()> 0) {
+        if(msg.size()> 0) {
             std::cout<<"testpoint ";
             //addmsgtoProccess(msg);
             //std::cout<<"test point2";
