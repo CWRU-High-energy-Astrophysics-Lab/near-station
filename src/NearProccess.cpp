@@ -88,15 +88,16 @@ int NearProccess::start() {
 
         auto msg = getmsgToUnpack();
 
-        std::cout<< "1";
+
         if(!msg.empty()) {
 
             addmsgtoProccess(msg);
         }
-        std::cout<< "2";
+
        if (!msgtoProccessEmpty()) {
             Generalmsg msg = getmsgToProccess();
             string type = msg.gedID();
+            std::cout<< "2";
             printf("%s", "msg recieved");
             if (type == "T3LI") {
                 addmsgtoPack(msg);// sent to storGE
