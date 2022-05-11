@@ -158,7 +158,7 @@ bool msgtoProccessEmpty() {
 void addmsgtoProccess(std::string incoming) {
 
     Generalmsg msg = decrypt(incoming);
-    std::cout << "testpoint2 "<<std::endl;
+
     mu.lock();
     msgToProccess.push(msg);
     mu.unlock();
@@ -289,7 +289,7 @@ Generalmsg decrypt(std::string input) {
         } else {
             msg = Generalmsg(type, "REV0", payload, 12);
             //add a report to log
-            std::cout << "testpoint6 " << std::endl;
+
         }
     }
     catch (const std::out_of_range){
