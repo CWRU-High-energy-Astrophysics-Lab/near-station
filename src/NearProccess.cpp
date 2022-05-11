@@ -156,8 +156,9 @@ bool msgtoProccessEmpty() {
 
 //function to msgToProccess
 void addmsgtoProccess(std::string incoming) {
-
+    std::cout << "testpoint "<<std::endl;
     Generalmsg msg = decrypt(incoming);
+    std::cout << "testpoint2 "<<std::endl;
     mu.lock();
     msgToProccess.push(msg);
     mu.unlock();
@@ -271,7 +272,9 @@ string encrypt(const Generalmsg &generalmsg) {
 
 Generalmsg decrypt(std::string input) {
     Generalmsg msg;
+    std::cout << "testpoint3 "<<std::endl;
     std::string type = input.substr(0, 3);
+    std::cout << "testpoint4 "<<std::endl;
     unsigned long headerend = input.find(':');
     std::string payload = input.substr(headerend);
     if (type == "T3LI") {
