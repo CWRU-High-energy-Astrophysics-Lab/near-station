@@ -94,11 +94,11 @@ int NearProccess::start() {
         }
 
         if (!msgtoProccessEmpty()) {
-             std::cout<< "1"<<std::endl;
+
              Generalmsg msg = getmsgToProccess();
             std::string type = msg.gedID();
-             std::cout<< "2"<<std::endl;
-             printf("%s", "msg recieved");
+
+
              if (type == "T3LI") {
                  addmsgtoPack(msg);// sent to storGE
 
@@ -276,7 +276,7 @@ Generalmsg decrypt(std::string input) {
     std::string type = input.substr(0, 3);
     unsigned long headerend = input.find(':');
     try {
-        std::string payload = input.substr(headerend);
+        std::string payload = input.substr(headerend+1);
         if (type == "T3LI") {
             msg = T3msg(payload);
         } else if (type.substr(0, 2) == "CMD") {
