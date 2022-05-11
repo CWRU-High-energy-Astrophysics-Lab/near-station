@@ -204,7 +204,7 @@ string getmsgToSend() {
     mu3.lock();
     string pack;
     if(!msgToSend.empty()) {
-        string pack = msgToSend.top();
+         pack = msgToSend.top();
         msgToSend.pop();
     }
     mu3.unlock();
@@ -226,12 +226,12 @@ string getmsgToUnpack() {
     mu4.lock();
     string pack;
     if(!msgToUnPack.empty()) {
-
-        string pack = msgToUnPack.top();
+        std::cout<<"hi";
+        pack = msgToUnPack.top();
         msgToUnPack.pop();
     }
     mu4.unlock();
-    std::cout<<"hi";
+
 
     return pack;
 
