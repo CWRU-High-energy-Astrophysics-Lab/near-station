@@ -85,8 +85,8 @@ bool npt() {
 int NearProccess::start() {
 
     while (!restartingpi) {
-        std::cout<< msgToUnPack.size();
-        std::cout<< msgToProccess.size();
+        //std::cout<< msgToUnPack.size();
+        //std::cout<< msgToProccess.size();
         auto msg = getmsgToUnpack(); // this is always returning an empty string
 
 
@@ -214,7 +214,7 @@ string getmsgToSend() {
 
 //Functions to msgToUnpack
 void addmsgtoUnpack(string incoming) {
-    //std::cout<< incoming;
+    std::cout<< incoming;
     mu4.lock();
 
     msgToUnPack.push(incoming);
