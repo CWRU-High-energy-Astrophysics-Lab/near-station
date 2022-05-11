@@ -95,6 +95,7 @@ int NearProccess::start() {
         }
 
        if (!msgtoProccessEmpty()) {
+            std::cout<< "1";
             Generalmsg msg = getmsgToProccess();
             string type = msg.gedID();
             std::cout<< "2";
