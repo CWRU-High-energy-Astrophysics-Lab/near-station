@@ -84,7 +84,7 @@ int NearProccess::start() {
 
         std::string msg = getmsgToUnpack();
 
-        std::cout<< msg;
+
 
 
         if (!msg.empty()) {
@@ -93,11 +93,11 @@ int NearProccess::start() {
 
         }
 
-        /*if (!msgtoProccessEmpty()) {
-             std::cout<< "1";
+        if (!msgtoProccessEmpty()) {
+             std::cout<< "1"<<std::endl;
              Generalmsg msg = getmsgToProccess();
             std::string type = msg.gedID();
-             std::cout<< "2";
+             std::cout<< "2"<<std::endl;
              printf("%s", "msg recieved");
              if (type == "T3LI") {
                  addmsgtoPack(msg);// sent to storGE
@@ -127,6 +127,7 @@ int NearProccess::start() {
                  // log request, send log file.
              } else {
                  Generalmsg msg = msg;
+                 std::cout<< "3"<<std::endl;
                  std::cout << encrypt(msg);
                  //add a report to log
              }
@@ -134,7 +135,7 @@ int NearProccess::start() {
          while(ismsgFromNetIn()!=true){
 
              addmsgtoProccess(encrypt(getmsgToNetIn()));
-         }*/
+         }
 
 
 
