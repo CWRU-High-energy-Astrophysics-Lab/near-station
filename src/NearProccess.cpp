@@ -126,7 +126,7 @@ int NearProccess::start() {
                  addmsgtoPack(msg);
                  // log request, send log file.
              } else {
-                 Generalmsg msg = msg;
+
                  std::cout<< "3"<<std::endl;
                  std::cout << encrypt(msg);
                  //add a report to log
