@@ -93,7 +93,7 @@ int NearProccess::start() {
 
         }
 
-        if (!msgtoProccessEmpty()) {
+        /*if (!msgtoProccessEmpty()) {
              std::cout<< "1";
              Generalmsg msg = getmsgToProccess();
             std::string type = msg.gedID();
@@ -134,7 +134,7 @@ int NearProccess::start() {
          while(ismsgFromNetIn()!=true){
 
              addmsgtoProccess(encrypt(getmsgToNetIn()));
-         }
+         }*/
 
 
 
