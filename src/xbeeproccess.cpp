@@ -77,19 +77,19 @@ bool setup() {
 void send()
 {
     char write_buf [256]; //WARNING : The last character must be change line character!
-    string msg=getmsgToSend();
+    std::string msg=getmsgToSend();
     strcpy(write_buf,msg.c_str());
     write(serial_port, write_buf, sizeof(write_buf));
 }
 
 
 
-string read()
+std::string read()
 {
     int num_bytes;
     char read_buf [256];
     num_bytes = read(serial_port, &read_buf, sizeof(read_buf));
-    string readN=read_buf;
+    std::string readN=read_buf;
     //printf(readN.c_str());
     return readN;
 }
