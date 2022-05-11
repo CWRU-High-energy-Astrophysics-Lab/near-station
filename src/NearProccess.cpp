@@ -88,8 +88,8 @@ int NearProccess::start() {
 
 
         if (!msg.empty()) {
-            std::cout << "testpoint "<<std::endl;
-            //addmsgtoProccess(msg);
+
+            addmsgtoProccess(msg);
             //std::cout<<"test point2";
         }
 
@@ -157,7 +157,7 @@ bool msgtoProccessEmpty() {
 //function to msgToProccess
 void addmsgtoProccess(std::string incoming) {
 
-    Generalmsg msg = decrypt(std::move(incoming));
+    Generalmsg msg = decrypt(incoming);
     mu.lock();
     msgToProccess.push(msg);
     mu.unlock();
