@@ -84,7 +84,7 @@ int NearProccess::start() {
 
         std::string msg = getmsgToUnpack();
 
-
+        std::cout<< msg;
 
 
         if (msg.size() > 0) {
