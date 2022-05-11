@@ -84,10 +84,10 @@ int NearProccess::start() {
 
         std::string msg = getmsgToUnpack();
 
-        std::cout<< msg.length();
+        std::cout<< msg;
 
 
-        if (msg.size() > 0) {
+        if (static_cast<int>(msg.length())> 0) {
             std::cout << "testpoint ";
             //addmsgtoProccess(msg);
             //std::cout<<"test point2";
