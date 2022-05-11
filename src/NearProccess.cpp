@@ -89,7 +89,7 @@ int NearProccess::start() {
         auto msg = getmsgToUnpack();
 
 
-        std::cout<< msg.empty();;
+        std::cout<< msg.length();
         if(!msg.empty()) {
             std::cout<<"test point";
             addmsgtoProccess(msg);
