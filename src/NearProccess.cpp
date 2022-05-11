@@ -88,7 +88,7 @@ int NearProccess::start() {
 
 
         if (!msg.empty()) {
-            std::cout << "testpoint ";
+            std::cout << "testpoint "<<std::endl;
             //addmsgtoProccess(msg);
             //std::cout<<"test point2";
         }
