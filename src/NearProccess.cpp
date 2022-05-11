@@ -156,7 +156,7 @@ bool msgtoProccessEmpty() {
 
 //function to msgToProccess
 void addmsgtoProccess(std::string incoming) {
-    std::cout << "testpoint "<<std::endl;
+
     Generalmsg msg = decrypt(incoming);
     std::cout << "testpoint2 "<<std::endl;
     mu.lock();
@@ -276,7 +276,9 @@ Generalmsg decrypt(std::string input) {
     std::string type = input.substr(0, 3);
     std::cout << "testpoint4 "<<std::endl;
     unsigned long headerend = input.find(':');
+    std::cout << "testpoint5 "<<std::endl;
     std::string payload = input.substr(headerend);
+    std::cout << "testpoint6 "<<std::endl;
     if (type == "T3LI") {
         msg = T3msg(payload);
     } else if (type.substr(0, 2) == "CMD") {
@@ -290,6 +292,7 @@ Generalmsg decrypt(std::string input) {
     } else {
         msg = Generalmsg(type, "REV0", payload, 12);
         //add a report to log
+        std::cout << "testpoint6 "<<std::endl;
     }
 
 
