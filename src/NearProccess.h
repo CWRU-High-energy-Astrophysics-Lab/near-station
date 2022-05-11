@@ -3,8 +3,8 @@
 //
 
 #include <iostream>
-#include <string>
-#include <cstdlib>
+
+
 #include <queue>
 #include <thread>
 
@@ -23,7 +23,7 @@
 
 #endif //FAR_STATION_ROBIN_EAD_H
 
-using namespace std;
+
 priority_queue<Generalmsg> msgToProccess;
 priority_queue<Generalmsg> msgToPack;
 priority_queue<string> msgToSend;
@@ -49,15 +49,7 @@ public:
 
 int start();
 
-//comands to cdas
-[[nodiscard]] string startCDAS() const;
-[[nodiscard]] string startDataCollection() const;
-[[nodiscard]] string rebootStation() const;
-[[nodiscard]] string rebootBrodcast() const;
-[[nodiscard]] string t3Random() const;
- string t3Time(const basic_string<char>& time) const;
- string os9cmd(const string& cmd) const;
- [[nodiscard]] string stopCDAS() const;
+
 
 
 

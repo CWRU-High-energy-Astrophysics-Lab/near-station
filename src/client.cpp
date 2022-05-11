@@ -8,8 +8,8 @@
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#include <cstdlib>
-#include <cstring>
+
+
 #include <iostream>
 #include <boost/asio.hpp>
 
@@ -30,7 +30,7 @@ int send(std::string hostname, std::string port, std::string msg) {
         tcp::socket s(io_service);
         boost::asio::connect(s, iterator);
 
-        using namespace std; // For strlen.
+
 
 
 

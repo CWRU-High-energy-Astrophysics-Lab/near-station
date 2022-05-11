@@ -29,14 +29,14 @@ bool ismsgFromNetIn();
 bool ismsgToStorageEmpty();
 
 //returns next msg needed to be sent
-string getmsgToT2PI();
+std::string getmsgToT2PI();
 
 // add incoming msg to queue to be unpacked and process
 void addmsgtoT2PI(Generalmsg incoming);
 
 
 //returns next msg needed to be sent
-string getmsgToStorage();
+std::string getmsgToStorage();
 
 // add incoming msg to queue to be unpacked and process
 void addmsgtoStorage(Generalmsg incoming);
@@ -45,4 +45,4 @@ void addmsgtoStorage(Generalmsg incoming);
 Generalmsg getmsgToNetIn();
 
 // add incoming msg to queue to be unpacked and process
-void addmsgtoNetIn (string incoming);
+void addmsgtoNetIn (std::string incoming);

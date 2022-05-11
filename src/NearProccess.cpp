@@ -6,12 +6,12 @@
 #include <mutex>
 #include <thread>
 #include <iostream>
-#include <fstream>
+
 #include <filesystem>
 #include <utility>
 #include "packinterface.h"
 #include "networkcom.h"
-#include <unistd.h>
+
 
 mutex mu;
 mutex mu2;
@@ -19,31 +19,33 @@ mutex mu3;
 mutex mu4;
 mutex mu5;
 bool restartingpi = false;
-bool getRestart(){
+
+bool getRestart() {
     return restartingpi;
 }
-string user;
+
+std::string user;
+
 bool init() { //set baud rates and check file system layout
     msgToProccess = priority_queue<Generalmsg>();
     msgToPack = priority_queue<Generalmsg>();
-    msgToUnPack = priority_queue<string>();
-    msgToSend = priority_queue<string>();
+    msgToUnPack = priority_queue<std::string>();
+    msgToSend = priority_queue<std::string>();
     msgToCentral = priority_queue<Generalmsg>();
     msgFromCentral = priority_queue<Generalmsg>();
 
-    user= "/home/"+ string(getenv("USER"));
-    try{
+    user = "/home/" + std::string(getenv("USER"));
+    try {
         filesystem::current_path(user);
-        filesystem::current_path(user+"/data");
-        filesystem::current_path(user+"/data/log");
-        filesystem::current_path(user+"/data/temp");
+        filesystem::current_path(user + "/data");
+        filesystem::current_path(user + "/data/log");
+        filesystem::current_path(user + "/data/temp");
         filesystem::current_path(user);
-
 
 
     }
-    catch (std::filesystem::filesystem_error const& ex) {
-        cout<< "File system not as expected, please check\n";
+    catch (std::filesystem::filesystem_error const &ex) {
+        cout << "File system not as expected, please check\n";
         return false;
     }
 
@@ -64,12 +66,6 @@ int main() {//this is called on pi boot
         processThread.join();
 
 
-
-
-
-
-
-
     }
     return 1;
 }
@@ -86,59 +82,59 @@ int NearProccess::start() {
 
     while (!restartingpi) {
 
-        auto msg = getmsgToUnpack();
+        std::string msg = getmsgToUnpack();
 
 
-        std::cout<< msg;
+        std::cout << msg.length();
 
-        if(msg.size()> 0) {
-            std::cout<<"testpoint ";
+        if (msg.size() > 0) {
+            std::cout << "testpoint ";
             //addmsgtoProccess(msg);
             //std::cout<<"test point2";
         }
 
-       /*if (!msgtoProccessEmpty()) {
-            std::cout<< "1";
-            Generalmsg msg = getmsgToProccess();
-            string type = msg.gedID();
-            std::cout<< "2";
-            printf("%s", "msg recieved");
-            if (type == "T3LI") {
-                addmsgtoPack(msg);// sent to storGE
+        /*if (!msgtoProccessEmpty()) {
+             std::cout<< "1";
+             Generalmsg msg = getmsgToProccess();
+             string type = msg.gedID();
+             std::cout<< "2";
+             printf("%s", "msg recieved");
+             if (type == "T3LI") {
+                 addmsgtoPack(msg);// sent to storGE
 
 
 
 
-            } else if (type.substr(0, 2) == "CMD") {
+             } else if (type.substr(0, 2) == "CMD") {
 
 
-                if (msg.gedID() == "CMDN") {
-                    restartingpi = true;
-                }
-                else{
-                    addmsgtoPack(msg);
-                }
-            }
-             else if (type == "HIST") {
+                 if (msg.gedID() == "CMDN") {
+                     restartingpi = true;
+                 }
+                 else{
+                     addmsgtoPack(msg);
+                 }
+             }
+              else if (type == "HIST") {
 
-                addmsgtoPack(msg);
-                //history request, send history
-            } else if (type == "T2LI") {
-                addmsgtoCentral(msg);
+                 addmsgtoPack(msg);
+                 //history request, send history
+             } else if (type == "T2LI") {
+                 addmsgtoCentral(msg);
 
-            } else if (type == "LOGB") {
-                addmsgtoPack(msg);
-                // log request, send log file.
-            } else {
-                Generalmsg msg = msg;
-                std::cout << encrypt(msg);
-                //add a report to log
-            }
-        }
-        while(ismsgFromNetIn()!=true){
+             } else if (type == "LOGB") {
+                 addmsgtoPack(msg);
+                 // log request, send log file.
+             } else {
+                 Generalmsg msg = msg;
+                 std::cout << encrypt(msg);
+                 //add a report to log
+             }
+         }
+         while(ismsgFromNetIn()!=true){
 
-            addmsgtoProccess(encrypt(getmsgToNetIn()));
-        }*/
+             addmsgtoProccess(encrypt(getmsgToNetIn()));
+         }*/
 
 
 
@@ -146,7 +142,6 @@ int NearProccess::start() {
     }
     return restartingpi;
 }
-
 
 
 bool msgtoProccessEmpty() {
@@ -160,7 +155,7 @@ bool msgtoProccessEmpty() {
 
 
 //function to msgToProccess
-void addmsgtoProccess(string incoming) {
+void addmsgtoProccess(std::string incoming) {
 
     Generalmsg msg = decrypt(std::move(incoming));
     mu.lock();
@@ -172,7 +167,7 @@ Generalmsg NearProccess::getmsgToProccess() {
     Generalmsg msg;
     mu.lock();
 
-    if(!msgToProccess.empty()) {
+    if (!msgToProccess.empty()) {
         msg = msgToProccess.top();
         msgToProccess.pop();
     }
@@ -182,7 +177,7 @@ Generalmsg NearProccess::getmsgToProccess() {
 }
 
 // functions to msgToPack
-void NearProccess::addmsgtoPack(const Generalmsg& outgoing) {
+void NearProccess::addmsgtoPack(const Generalmsg &outgoing) {
     mu2.lock();
     msgToPack.push(outgoing);
     mu2.unlock();
@@ -191,7 +186,7 @@ void NearProccess::addmsgtoPack(const Generalmsg& outgoing) {
 
 string getmsgToPack() {
     mu2.lock();
-    string pack = encrypt(msgToPack.top());
+    std::string pack = encrypt(msgToPack.top());
     msgToPack.pop();
     mu2.unlock();
     return pack;
@@ -209,8 +204,8 @@ void addmsgtoSend(string outgoing) {
 string getmsgToSend() {
     mu3.lock();
     string pack;
-    if(!msgToSend.empty()) {
-         pack = msgToSend.top();
+    if (!msgToSend.empty()) {
+        pack = msgToSend.top();
         msgToSend.pop();
     }
     mu3.unlock();
@@ -231,7 +226,7 @@ void addmsgtoUnpack(string incoming) {
 string getmsgToUnpack() {
     mu4.lock();
     string pack;
-    if(!msgToUnPack.empty()) {
+    if (!msgToUnPack.empty()) {
 
         pack = msgToUnPack.top();
         msgToUnPack.pop();
@@ -263,29 +258,22 @@ Generalmsg getmsgFromCentral() {
 }
 
 
-
-
-
-
-
-
-
 //piCommand
-int NearProccess::bashCmd(const string& cmd) {
+int NearProccess::bashCmd(const string &cmd) {
     return system(cmd.c_str());
 }
 
 
-string encrypt(const Generalmsg& generalmsg) {
+string encrypt(const Generalmsg &generalmsg) {
     return string(generalmsg.gedID() + "[" + generalmsg.getRev() + "]:" + to_string(generalmsg.getSize()) +
                   generalmsg.getPayload());
 }
 
-Generalmsg decrypt(basic_string<char> input) {
+Generalmsg decrypt(std::string input) {
     Generalmsg msg;
-    string type = input.substr(0, 3);
+    std::string type = input.substr(0, 3);
     unsigned long headerend = input.find(':');
-    string payload = input.substr(headerend);
+    std::string payload = input.substr(headerend);
     if (type == "T3LI") {
         msg = T3msg(payload);
     } else if (type.substr(0, 2) == "CMD") {

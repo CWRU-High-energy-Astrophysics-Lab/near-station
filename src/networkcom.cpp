@@ -6,17 +6,17 @@
 #include "client.h"
 #include "server.h"
 
-mutex munet;
+std::mutex munet;
 bool working = true;
-priority_queue<string> msgToT2PI;
+std::priority_queue<std::string> msgToT2PI;
 
-priority_queue<string> msgToStorage;// send every thing that is not T2
-priority_queue<string> msgNetIn;
+std::priority_queue<std::string> msgToStorage;// send every thing that is not T2
+std::priority_queue<std::string> msgNetIn;
 
 
 bool netThread() {
     // start on thead of incoming
-    thread serverthead(startServer);
+    std::thread serverthead(startServer);
 
     //client loop
     while (working) {
@@ -57,16 +57,16 @@ bool ismsgToStorageEmpty() {
 }
 
 
-string encryptnet(const Generalmsg &generalmsg) {
-    return string(generalmsg.gedID() + "[" + generalmsg.getRev() + "]:" + to_string(generalmsg.getSize()) +
+std::string encryptnet(const Generalmsg &generalmsg) {
+    return std::string(generalmsg.gedID() + "[" + generalmsg.getRev() + "]:" + std::to_string(generalmsg.getSize()) +
                   generalmsg.getPayload());
 }
 
-Generalmsg decryptnet(basic_string<char> input) {
+Generalmsg decryptnet(std::string input) {
     Generalmsg msg;
-    string type = input.substr(0, 3);
+    std::string type = input.substr(0, 3);
     unsigned long headerend = input.find(':');
-    string payload = input.substr(headerend);
+    std::string payload = input.substr(headerend);
     if (type == "T3LI") {
         msg = T3msg(payload);
     } else if (type.substr(0, 2) == "CMD") {
@@ -87,9 +87,9 @@ Generalmsg decryptnet(basic_string<char> input) {
 }
 
 //returns next msg needed to be sent
-string getmsgToT2PI() {
+std::string getmsgToT2PI() {
     munet.lock();
-    string pack = msgToT2PI.top();
+    std::string pack = msgToT2PI.top();
     msgToT2PI.pop();
     munet.unlock();
     return pack;
@@ -104,9 +104,9 @@ void addmsgtoT2PI(Generalmsg incoming) {
 
 
 //returns next msg needed to be sent
-string getmsgToStorage() {
+std::string getmsgToStorage() {
     munet.lock();
-    string pack = msgToStorage.top();
+    std::string pack = msgToStorage.top();
     msgToStorage.pop();
     munet.unlock();
     return pack;
@@ -124,7 +124,7 @@ void addmsgtoStorage(Generalmsg incoming) {
 Generalmsg getmsgToNetIn() {
     munet.lock();
 
-    string pack = msgNetIn.top();
+    std::string pack = msgNetIn.top();
 
     msgNetIn.pop();
     munet.unlock();
@@ -134,7 +134,7 @@ Generalmsg getmsgToNetIn() {
 }
 
 // add incoming msg to queue to be unpacked and process
-void addmsgtoNetIn(string incoming) {
+void addmsgtoNetIn(std::string incoming) {
     munet.lock();
     msgNetIn.push(incoming);
     munet.unlock();
