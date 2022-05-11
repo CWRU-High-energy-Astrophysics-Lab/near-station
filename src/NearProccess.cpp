@@ -85,16 +85,15 @@ bool npt() {
 int NearProccess::start() {
 
     while (!restartingpi) {
-        //std::cout<< msgToUnPack.size();
-        //std::cout<< msgToProccess.size();
-        auto msg = getmsgToUnpack(); // this is always returning an empty string
+
+        auto msg = getmsgToUnpack();
 
 
         if(!msg.empty()) {
             std::cout<< "add";
-            //addmsgtoProccess(msg);
+            addmsgtoProccess(msg);
         }
-      /*  if (!msgtoProccessEmpty()) {
+       if (!msgtoProccessEmpty()) {
             Generalmsg msg = getmsgToProccess();
             string type = msg.gedID();
             printf("%s", "msg recieved");
@@ -129,7 +128,7 @@ int NearProccess::start() {
                 std::cout << encrypt(msg);
                 //add a report to log
             }
-        }*/
+        }
         while(ismsgFromNetIn()!=true){
 
             addmsgtoProccess(encrypt(getmsgToNetIn()));
@@ -214,7 +213,7 @@ string getmsgToSend() {
 
 //Functions to msgToUnpack
 void addmsgtoUnpack(string incoming) {
-    std::cout<< incoming;
+
     mu4.lock();
 
     msgToUnPack.push(incoming);
@@ -226,7 +225,7 @@ string getmsgToUnpack() {
     mu4.lock();
     string pack;
     if(!msgToUnPack.empty()) {
-        std::cout<<"hi";
+
         pack = msgToUnPack.top();
         msgToUnPack.pop();
     }
