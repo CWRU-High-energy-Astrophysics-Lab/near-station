@@ -149,6 +149,7 @@ int NearProccess::start() {
 bool msgtoProccessEmpty() {
     mu.lock();
     bool temp = msgToProccess.empty();
+    std::cout<< temp;
     mu.unlock();
 
     return temp;
