@@ -76,8 +76,9 @@ bool setup() {
 }
 void send()
 {
-    char write_buf [256]; //WARNING : The last character must be change line character!
     std::string msg=getmsgToSend();
+    char write_buf [sizeof(msg)+1]; //WARNING : The last character must be change line character!
+
     strcpy(write_buf,msg.c_str());
     write(serial_port, write_buf, sizeof(write_buf));
 }
