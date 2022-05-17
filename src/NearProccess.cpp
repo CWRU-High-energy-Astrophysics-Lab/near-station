@@ -127,7 +127,7 @@ int NearProccess::start() {
                  // log request, send log file.
              } else {
 
-                 std::cout<< "test point"<<std::endl;
+                 std::cout<< type <<std::endl;
                  std::cout << encrypt(msg);
                  //add a report to log
              }
