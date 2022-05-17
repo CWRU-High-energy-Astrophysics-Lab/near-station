@@ -88,13 +88,13 @@ int NearProccess::start() {
 
 
         if (!msg.empty()) {
-
+            std::cout<< "testpoint1" <<std::endl;
             addmsgtoProccess(msg);
 
         }
 
         if (!msgtoProccessEmpty()) {
-
+            std::cout<< "testpoint2" <<std::endl;
              Generalmsg msg = getmsgToProccess();
             std::string type = msg.getID();
 
