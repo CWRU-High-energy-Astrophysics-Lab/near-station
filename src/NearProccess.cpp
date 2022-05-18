@@ -9,6 +9,7 @@
 
 #include <filesystem>
 #include <utility>
+#include <unistd.h>
 #include "packinterface.h"
 #include "networkcom.h"
 
@@ -81,7 +82,7 @@ bool npt() {
 int NearProccess::start() {
 
     while (!restartingpi) {
-
+        usleep(1);
         std::string msg = getmsgToUnpack();
 
 
