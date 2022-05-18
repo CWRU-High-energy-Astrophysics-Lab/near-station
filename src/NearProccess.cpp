@@ -82,7 +82,7 @@ bool npt() {
 int NearProccess::start() {
 
     while (!restartingpi) {
-        usleep(1);
+
         std::string msg = getmsgToUnpack();
 
 
@@ -90,7 +90,7 @@ int NearProccess::start() {
 
         if (!msg.empty()) {
             addmsgtoProccess(msg);
-           std::cout << msg<<std::endl;
+          // std::cout << msg<<std::endl;
 
         }
 
@@ -128,8 +128,8 @@ int NearProccess::start() {
                  // log request, send log file.
              } else {
 
-                 std::cout<< type <<std::endl;
-                 std::cout << encrypt(msg);
+                 //std::cout<< "recieved" <<std::endl;
+                 //std::cout << encrypt(msg);
                  //add a report to log
              }
          }
