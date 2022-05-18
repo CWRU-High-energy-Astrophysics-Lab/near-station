@@ -107,7 +107,7 @@ bool xbeeLoop() {
         printf(msg.c_str());
         addmsgtoUnpack(msg);
         send();
-        sleep(0.25);
+
     }
         return true;
 }
