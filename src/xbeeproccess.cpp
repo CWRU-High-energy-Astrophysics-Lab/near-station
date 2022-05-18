@@ -104,7 +104,7 @@ bool xbeeLoop() {
     if (!setup()) { return false; }
     while(!getRestart()){
         auto msg = read();
-
+        printf(msg.c_str());
         addmsgtoUnpack(msg);
         send();
         sleep(0.25);
