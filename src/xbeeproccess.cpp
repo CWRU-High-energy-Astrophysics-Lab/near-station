@@ -131,13 +131,13 @@ std::string read()
 
 
 bool xbeeLoop() {
-
+    printf("failed");
     serial_port = open(port, O_RDWR);
     if (!setup()) {
 
         return false; }
     while(!getRestart()){
-        printf("failed");
+
         auto msg = read();
         printf(msg.c_str());
         addmsgtoUnpack(msg);
