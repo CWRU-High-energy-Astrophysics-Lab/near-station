@@ -133,7 +133,9 @@ std::string read()
 bool xbeeLoop() {
 
     serial_port = open(port, O_RDWR);
-    if (!setup()) { return false; }
+    if (!setup()) {
+        printf("failed");
+        return false; }
     while(!getRestart()){
         auto msg = read();
         printf(msg.c_str());
