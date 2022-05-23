@@ -19,6 +19,7 @@ int xbee_port;
 #include <unistd.h> // write(), read(), close()
 
 #include <thread>
+#include <iostream>
 
 const char *port = "/dev/Xbee";
 using std::thread;
@@ -77,22 +78,50 @@ bool setup() {
 void send()
 {
     std::string msg=getmsgToSend();
-    char write_buf [sizeof(msg)+1]; //WARNING : The last character must be change line character!
 
-    strcpy(write_buf,msg.c_str());
-    write(serial_port, write_buf, sizeof(write_buf));
+    write(serial_port, static_cast< const void*>(msg.c_str()), msg.size() + 1);
+
 }
 
 
 
 std::string read()
 {
-    int num_bytes;
-    char read_buf [256];
-    num_bytes = read(serial_port, &read_buf, sizeof(read_buf));
-    std::string readN=read_buf;
-    //printf(readN.c_str());
-    return readN;
+    // The following variables could be made parameters if needed
+    // expected message size
+    constexpr int k_initial_buf_len = 256;
+    // max message size (throws error if exceeded)
+    constexpr int k_max_msg_len = 512;
+
+    std::string res;
+    res.reserve(k_initial_buf_len);
+
+    int total_bytes = 0;
+    char current;
+
+    // reads one byte from the serial port at a time
+    // exits once a newline is reached or there are no more bytes to read in the buffer.
+    while(1) {
+        if(read(serial_port, &current, 1)) {
+            // done if we see a newline or a null termination
+            if(current == '\n' || reinterpret_cast<const char *>(current) == "\0") {
+                break;
+            } else if(total_bytes >= k_max_msg_len) {
+                // throw an error here bc message too long
+                std::cerr << "Message too long!" << std::endl;
+                return "";
+            } else {
+                res.append(reinterpret_cast<const char *>(current));
+                ++total_bytes;
+            }
+        } else {
+            break;
+        }
+    }
+
+    // shrink the string down in order to conserve memory
+    res.shrink_to_fit();
+    return res;
 }
 
 
