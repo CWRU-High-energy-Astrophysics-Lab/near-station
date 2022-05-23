@@ -134,9 +134,10 @@ bool xbeeLoop() {
 
     serial_port = open(port, O_RDWR);
     if (!setup()) {
-        printf("failed");
+
         return false; }
     while(!getRestart()){
+        printf("failed");
         auto msg = read();
         printf(msg.c_str());
         addmsgtoUnpack(msg);
