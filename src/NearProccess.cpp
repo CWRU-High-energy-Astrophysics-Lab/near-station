@@ -129,7 +129,7 @@ int NearProccess::start() {
              } else {
 
                  //std::cout<< "recieved" <<std::endl;
-                 //std::cout << encrypt(msg);
+                 std::cout << encrypt(msg);
                  //add a report to log
              }
          }
