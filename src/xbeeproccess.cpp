@@ -89,10 +89,11 @@ std::string read()
 {
     // The following variables could be made parameters if needed
     // expected message size
+    printf("testpoint0");
     constexpr int k_initial_buf_len = 256;
     // max message size (throws error if exceeded)
     constexpr int k_max_msg_len = 512;
-    printf("testpoint0");
+    printf("testpoint5");
     std::string res;
     res.reserve(k_initial_buf_len);
     printf("testpoint1");
