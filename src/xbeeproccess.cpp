@@ -95,7 +95,7 @@ std::string read()
 
     std::string res;
     res.reserve(k_initial_buf_len);
-
+    printf("testpoint1");
     int total_bytes = 0;
     char current;
 
@@ -103,6 +103,7 @@ std::string read()
     // exits once a newline is reached or there are no more bytes to read in the buffer.
     while(1) {
         if(read(serial_port, &current, 1)) {
+            printf("testpoint2");
             // done if we see a newline or a null termination
             if(current == '\n' || reinterpret_cast<const char *>(current) == "\0") {
                 break;
@@ -121,6 +122,7 @@ std::string read()
 
     // shrink the string down in order to conserve memory
     res.shrink_to_fit();
+    printf("testpoint3");
     return res;
 }
 
