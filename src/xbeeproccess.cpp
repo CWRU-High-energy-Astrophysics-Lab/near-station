@@ -89,14 +89,14 @@ std::string read()
 {
     // The following variables could be made parameters if needed
     // expected message size
-    printf("testpoint0");
+    std::cout << "test0"<< std::endl;
     constexpr int k_initial_buf_len = 256;
     // max message size (throws error if exceeded)
     constexpr int k_max_msg_len = 512;
-    printf("testpoint5");
+    std::cout << "test1"<< std::endl;
     std::string res;
     res.reserve(k_initial_buf_len);
-    printf("testpoint1");
+    std::cout << "test2"<< std::endl;
     int total_bytes = 0;
     char current;
 
@@ -104,7 +104,7 @@ std::string read()
     // exits once a newline is reached or there are no more bytes to read in the buffer.
     while(1) {
         if(read(serial_port, &current, 1)) {
-            printf("testpoint2");
+            std::cout << "test3"<< std::endl;
             // done if we see a newline or a null termination
             if(current == '\n' || reinterpret_cast<const char *>(current) == "\0") {
                 break;
@@ -123,7 +123,7 @@ std::string read()
 
     // shrink the string down in order to conserve memory
     res.shrink_to_fit();
-    printf("testpoint3");
+    std::cout << "test4"<< std::endl;
     return res;
 }
 
@@ -131,7 +131,7 @@ std::string read()
 
 
 bool xbeeLoop() {
-    printf("failed");
+    std::cout << "test0.1"<< std::endl;
     serial_port = open(port, O_RDWR);
     if (!setup()) {
 
