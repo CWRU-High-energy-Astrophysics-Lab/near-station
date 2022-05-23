@@ -143,7 +143,7 @@ bool xbeeLoop() {
     while(!getRestart()){
 
         auto msg = read();
-        printf(msg.c_str());
+        std::cout << msg;
         addmsgtoUnpack(msg);
         send();
 
