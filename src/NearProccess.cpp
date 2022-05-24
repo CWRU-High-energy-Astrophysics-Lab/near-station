@@ -270,7 +270,7 @@ int NearProccess::bashCmd(const std::string &cmd) {
 
 std::string encrypt(const Generalmsg &generalmsg) {
     return std::string(generalmsg.getID() + "[" + generalmsg.getRev() + "]:" + std::to_string(generalmsg.getSize()) +
-                  generalmsg.getPayload()+'\n');
+                  generalmsg.getPayload()+'\0');
 }
 
 Generalmsg decrypt(std::string input) {

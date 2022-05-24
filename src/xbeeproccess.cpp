@@ -106,7 +106,7 @@ std::string read()
         if(read(serial_port, &current, 1)) {
 
             // done if we see a newline or a null termination
-            if(current == '\n' || reinterpret_cast<const char *>(current) == "\0") {
+            if( current == '\0') {
 
                 break;
             } else if(total_bytes >= k_max_msg_len) {
