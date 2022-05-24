@@ -99,7 +99,7 @@ int NearProccess::start() {
              Generalmsg msg = getmsgToProccess();
             std::string type = msg.getID();
 
-
+            std::cout << type<<std::endl;
              if (type == "T3LI") {
                  addmsgtoPack(msg);// sent to storGE
 
