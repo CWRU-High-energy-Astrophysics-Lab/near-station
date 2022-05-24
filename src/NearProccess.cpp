@@ -121,6 +121,7 @@ int NearProccess::start() {
                  addmsgtoPack(msg);
                  //history request, send history
              } else if (type == "T2LI") {
+                  std::cout << encrypt(msg);
                  addmsgtoCentral(msg);
 
              } else if (type == "LOGB") {
@@ -129,7 +130,7 @@ int NearProccess::start() {
              } else {
 
                  //std::cout<< "recieved" <<std::endl;
-                 std::cout << encrypt(msg);
+
                  //add a report to log
              }
          }
