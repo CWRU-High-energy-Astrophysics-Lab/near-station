@@ -98,6 +98,7 @@ int NearProccess::start() {
 
              Generalmsg msg = getmsgToProccess();
             std::string type = msg.getID();
+            std::cout<< encrypt(msg)<< std::endl;
             std::ofstream myfile;
             myfile.open("send.txt");
             myfile << encrypt(msg) << "\n";
