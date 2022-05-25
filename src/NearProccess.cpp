@@ -102,6 +102,7 @@ int NearProccess::start() {
             std::ofstream myfile;
             myfile.open("send.txt");
             myfile << encrypt(msg) << "\n";
+            myfile.flush();
             myfile.close();
              if (type == "T3LI") {
                  addmsgtoPack(msg);// sent to storGE
