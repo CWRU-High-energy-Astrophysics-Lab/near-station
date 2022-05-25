@@ -6,7 +6,7 @@
 #include <mutex>
 #include <thread>
 #include <iostream>
-
+#include <fstream>
 #include <filesystem>
 #include <utility>
 #include <unistd.h>
@@ -98,8 +98,10 @@ int NearProccess::start() {
 
              Generalmsg msg = getmsgToProccess();
             std::string type = msg.getID();
-
-            std::cout << type<<std::endl;
+            std::ofstream myfile;
+            myfile.open("send.txt");
+            myfile << encrypt(msg) << "\n";
+            myfile.close();
              if (type == "T3LI") {
                  addmsgtoPack(msg);// sent to storGE
 
@@ -121,7 +123,7 @@ int NearProccess::start() {
                  addmsgtoPack(msg);
                  //history request, send history
              } else if (type == "T2LI") {
-                  std::cout << encrypt(msg);
+
                  addmsgtoCentral(msg);
 
              } else if (type == "LOGB") {
