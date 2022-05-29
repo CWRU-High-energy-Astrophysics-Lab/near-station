@@ -68,7 +68,7 @@ public:
 
 private:
     void start_accept() {
-        session *new_session = new session(io_service_);
+        auto *new_session = new session(io_service_);
         acceptor_.async_accept(new_session->socket(),
                                boost::bind(&server::handle_accept, this, new_session,
                                            boost::asio::placeholders::error));
@@ -104,8 +104,9 @@ bool recieve() {
     }
     catch (std::exception &e) {
         std::cerr << "Exception: " << e.what() << "\n";
+        return false;
     }
 
-    return 0;
+    return true;
 }
 

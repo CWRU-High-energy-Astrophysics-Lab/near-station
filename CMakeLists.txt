@@ -19,7 +19,6 @@ add_executable(near_station src/msg_outline/T2msg.cpp
         src/msg_outline/augermsg.h
         src/NearProccess.cpp
         src/NearProccess.h
-        src/t2li.h
         src/xbeeinterface.h
         src/xbeeproccess.cpp
         src/client.cpp

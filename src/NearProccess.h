@@ -23,51 +23,42 @@
 
 #endif //FAR_STATION_ROBIN_EAD_H
 
+namespace nearprocess {
+    std::priority_queue<Generalmsg> msgToProccess;
+    std::priority_queue<Generalmsg> msgToPack;
+    std::priority_queue<std::string> msgToSend;
+    std::priority_queue<std::string> msgToUnPack;
 
-std::priority_queue<Generalmsg> msgToProccess;
-std::priority_queue<Generalmsg> msgToPack;
-std::priority_queue<std::string> msgToSend;
-std::priority_queue<std::string> msgToUnPack;
-std::priority_queue<Generalmsg> msgToCentral;
-std::priority_queue<Generalmsg> msgFromCentral;
-;
-bool msgtoProccessEmpty();
+
+    bool msgtoProccessEmpty();
+
 //string encrypt(const Generalmsg& msg) ;
 //Generalmsg decrypt(basic_string<char> msg);
-bool send_t3();
+    bool send_t3();
 
-bool npt();
-
-
-class NearProccess{
-public:
-
-   char *const EKITPORT = getenv("EKITPORT"); //enviormental varible
-
-    int USB{};
+    bool npt();
 
 
-int start();
+    char *const EKITPORT = getenv("EKITPORT"); //enviormental varible
 
 
 
 
+    int start();
 
-static Generalmsg getmsgToProccess();
-static void addmsgtoPack(const Generalmsg& outgoing);
 
+    static Generalmsg getmsgToProccess();
+
+    static void addmsgtoPack(const Generalmsg &outgoing);
 
 
 //piCommand
-static int bashCmd(const std::string& cmd);
+    static int bashCmd(const std::string &cmd);
 
 
+    std::string getT2();
 
-std::string getT2();
-
-std::string getT3();
-
-
+    std::string getT3();
 
 
 };

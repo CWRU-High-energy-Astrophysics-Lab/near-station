@@ -2,19 +2,13 @@
 // Created by robin on 1/28/22.
 //
 #include "xbeeinterface.h"
-
-
 #include <cstring>
-
-
-int xbee_port;
-
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+#include <string>
 
 // Linux headers
 #include <fcntl.h> // Contains file controls like O_RDWR
-#include <errno.h> // Error integer and strerror() function
+#include <cerrno> // Error integer and strerror() function
 #include <termios.h> // Contains POSIX terminal control definitions
 #include <unistd.h> // write(), read(), close()
 
@@ -26,12 +20,7 @@ using std::thread;
 
 int serial_port;
 struct termios tty;
-int s = 1; //sending mode. s==0 when sleeping mode.
 
-int n = 0;
-
-int bm = 1; //buffer mode. Either 1 or 2.
-int tsize = 0;
 
 
 bool setup() {
@@ -102,7 +91,7 @@ std::string read()
 
     // reads one byte from the serial port at a time
     // exits once a newline is reached or there are no more bytes to read in the buffer.
-    while(1) {
+    while(true) {
         if(read(serial_port, &current, 1)) {
 
             // done if we see a newline or a null termination

@@ -23,6 +23,7 @@
 
 
 void startServer();
+bool netThread();
 
 bool ismsgToT2PIEmpty();
 bool ismsgFromNetIn();
