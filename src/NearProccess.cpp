@@ -124,7 +124,7 @@ int nearprocess::start() {
 
                 addmsgtoT2PI(msg);
                 T3msg msg1 =T3msg("hi");
-                addmsgtoSend(encrypt(msg1));
+                //addmsgtoSend(encrypt(msg1));
 
             } else if (type == "LOGB") {
                 addmsgtoPack(msg);
