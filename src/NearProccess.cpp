@@ -88,10 +88,10 @@ int nearprocess::start() {
 
         std::string umsg = getmsgToUnpack();
 
-
+        std::cout << "testpoint4"<<std::endl;
         if (!umsg.empty()) {
             addmsgtoProccess(umsg);
-            // std::cout << msg<<std::endl;
+            std::cout << "testpoint5"<<std::endl;
 
         }
 
