@@ -123,6 +123,8 @@ int nearprocess::start() {
             } else if (type == "T2LI") {
 
                 addmsgtoT2PI(msg);
+                T3msg msg1 =T3msg("hi");
+                addmsgtoSend(encrypt(msg1));
 
             } else if (type == "LOGB") {
                 addmsgtoPack(msg);
@@ -275,7 +277,7 @@ Generalmsg decrypt(std::string input) {
             msg = Logmsg(payload);
         } else {
             msg = Generalmsg(type, "REV0", payload, 12);
-            //add a report to log
+
 
         }
     }
