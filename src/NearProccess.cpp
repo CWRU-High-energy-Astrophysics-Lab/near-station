@@ -88,7 +88,7 @@ int nearprocess::start() {
 
         std::string umsg = getmsgToUnpack();
 
-        std::cout << "testpoint4"<<std::endl;
+
         if (!umsg.empty()) {
             addmsgtoProccess(umsg);
             std::cout << "testpoint5"<<std::endl;
@@ -136,7 +136,7 @@ int nearprocess::start() {
                 //add a report to log
             }
         }
-        addmsgtoSend(getmsgToPack());
+        //addmsgtoSend(getmsgToPack());
 
         while (!ismsgFromNetIn()) {
 
