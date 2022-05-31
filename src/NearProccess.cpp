@@ -122,9 +122,9 @@ int nearprocess::start() {
                 //history request, send history
             } else if (type == "T2LI") {
 
-                addmsgtoT2PI(msg);
-                T3msg msg1 =T3msg("hi");
-                //addmsgtoSend(encrypt(msg1));
+                //addmsgtoT2PI(msg);
+                T3msg msg1 =T3msg("t3 request");
+                addmsgtoSend(encrypt(msg1));
 
             } else if (type == "LOGB") {
                 addmsgtoPack(msg);
