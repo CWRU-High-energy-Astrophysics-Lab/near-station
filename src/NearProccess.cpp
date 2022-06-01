@@ -91,7 +91,7 @@ int nearprocess::start() {
 
         if (!umsg.empty()) {
             addmsgtoProccess(umsg);
-            std::cout << "testpoint5"<<std::endl;
+
 
         }
 
@@ -130,7 +130,7 @@ int nearprocess::start() {
                 addmsgtoPack(msg);
                 // log request, send log file.
             } else {
-
+                std::cout<< "testpoint3"<< std::endl;
                 //std::cout<< "recieved" <<std::endl;
 
                 //add a report to log
