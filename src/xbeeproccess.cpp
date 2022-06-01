@@ -51,7 +51,7 @@ bool setup() {
     // tty.c_oflag &= ~ONOEOT; // Prevent removal of C-d chars (0x004) in output (NOT PRESENT ON LINUX)
 
     tty.c_cc[VTIME] = 0;    // Wait for up to 1s (10 deciseconds), returning as soon as any data is received.
-    tty.c_cc[VMIN] = 1;
+    tty.c_cc[VMIN] = 0;
 
     // Set in/out baud rate to be 9600
     cfsetispeed(&tty, B9600);
