@@ -102,7 +102,7 @@ int nearprocess::start() {
 
             std::ofstream myfile;
             myfile.open("send.txt", std::ios::app);
-            myfile << encrypt(msg) << "\n";
+            myfile << encrypt(msg) ;
             myfile.flush();
             myfile.close();
             if (type == "T3LI") {
