@@ -99,7 +99,7 @@ int nearprocess::start() {
 
             Generalmsg msg = getmsgToProccess();
             std::string type = msg.getID();
-            std::cout << encrypt(msg) << std::endl;
+
             std::ofstream myfile;
             myfile.open("send.txt", std::ios::app);
             myfile << encrypt(msg) << "\n";
@@ -121,7 +121,7 @@ int nearprocess::start() {
                 addmsgtoPack(msg);
                 //history request, send history
             } else if (type == "T2LI") {
-
+                std::cout<< "testpoint4"<< std::endl;
                 //addmsgtoT2PI(msg);
                 T3msg msg1 =T3msg("t3 request");
                 addmsgtoSend(encrypt(msg1));
