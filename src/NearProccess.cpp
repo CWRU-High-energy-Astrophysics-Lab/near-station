@@ -99,7 +99,7 @@ int nearprocess::start() {
 
             Generalmsg msg = getmsgToProccess();
             std::string type = msg.getID();
-            std::cout<< encrypt(msg)<<std::endl;
+            std::cout<< type<<std::endl;
             std::ofstream myfile;
             myfile.open("send.txt", std::ios::app);
             myfile << encrypt(msg)<<'\n' ;
