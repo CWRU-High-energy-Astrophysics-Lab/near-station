@@ -99,7 +99,7 @@ int nearprocess::start() {
 
             Generalmsg msg = getmsgToProccess();
             std::string type = msg.getID();
-            std::cout<< type<<std::endl;
+            std::cout<< encrypt(msg)<<std::endl;
             std::ofstream myfile;
             myfile.open("send.txt", std::ios::app);
             myfile << encrypt(msg)<<'\n' ;
@@ -123,14 +123,14 @@ int nearprocess::start() {
             } else if (type == "T2LI") {
 
                 //addmsgtoT2PI(msg);
-                T3msg msg1 =T3msg("t3 request");
+                T3msg msg1 =T3msg(":t3 request");
                 addmsgtoSend(encrypt(msg1));
 
             } else if (type == "LOGB") {
                 addmsgtoPack(msg);
                 // log request, send log file.
             } else {
-                std::cout<< "testpoint3"<< std::endl;
+                //std::cout<< "testpoint3"<< std::endl;
                 //std::cout<< "recieved" <<std::endl;
 
                 //add a report to log
@@ -263,6 +263,7 @@ Generalmsg decrypt(std::string input) {
     Generalmsg msg;
     std::string type = input.substr(0, 4);
     unsigned long headerend = input.find(':');
+
     try {
         std::string payload = input.substr(headerend + 1);
         if (type == "T3LI") {
