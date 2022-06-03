@@ -101,7 +101,7 @@ std::string read()
             } else if(total_bytes >= k_max_msg_len) {
 
                 // throw an error here bc message too long
-                std::cerr << "Message too long!" << std::endl;
+                std::cerr << "Message too long!"<<total_bytes << std::endl;
                 return "";
             } else {
 
