@@ -81,7 +81,7 @@ std::string read()
 
     constexpr int k_initial_buf_len = 256;
     // max message size (throws error if exceeded)
-    constexpr int k_max_msg_len = 512;
+    constexpr int k_max_msg_len = 40000;
 
     std::string res;
     res.reserve(k_initial_buf_len);
