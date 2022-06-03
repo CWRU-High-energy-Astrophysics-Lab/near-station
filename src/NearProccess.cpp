@@ -135,11 +135,12 @@ int nearprocess::start() {
                 }
                 tokens.erase(tokens.begin());
                 int trigger= rand() % (tokens.size()+1);
-                if(currenttime-lastt3time>60*60*5 && rand()%11 ==1){ // if it has been at least 5 minutes and 1/10 chance triggers
+                if(currenttime-lastt3time>60 && rand()%11 ==1){ // if it has been at least 5 minutes and 1/10 chance triggers
                     lastt3time=currenttime;
 
 
                     T3msg msg1 =T3msg(tokens[trigger]);
+                    std::cout<<"Trigger T3"<< std::endl;
                     addmsgtoSend(encrypt(msg1));
                 }
                 //addmsgtoT2PI(msg);
