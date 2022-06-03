@@ -102,14 +102,15 @@ int nearprocess::start() {
 
             Generalmsg msg = getmsgToProccess();
             std::string type = msg.getID();
-            std::cout<< type<<std::endl;
+
             std::ofstream myfile;
             myfile.open("send.txt", std::ios::app);
             myfile << encrypt(msg)<<'\n' ;
             myfile.flush();
             myfile.close();
             if (type == "T3LI") {
-                addmsgtoPack(msg);// sent to storGE
+                std::cout<< encrypt(msg)<<std::endl;
+                //addmsgtoPack(msg);// sent to storGE
 
             } else if (type.substr(0, 2) == "CMD") {
 
@@ -124,6 +125,7 @@ int nearprocess::start() {
                 addmsgtoPack(msg);
                 //history request, send history
             } else if (type == "T2LI") {
+                std::cout<< type<<std::endl;
                 auto currenttime = std::chrono::duration_cast<std::chrono::seconds>
                         (std::chrono::high_resolution_clock::now().time_since_epoch()).count();
                 std::vector<std::string> tokens;
