@@ -12,6 +12,8 @@
 #include <unistd.h>
 #include "packinterface.h"
 #include "networkcom.h"
+#include <random>
+#include <chrono>
 
 
 std::mutex mu;
@@ -20,6 +22,7 @@ std::mutex mu3;
 std::mutex mu4;
 
 bool restartingpi = false;
+long lastt3time;
 
 bool getRestart() {
     return restartingpi;
@@ -121,10 +124,26 @@ int nearprocess::start() {
                 addmsgtoPack(msg);
                 //history request, send history
             } else if (type == "T2LI") {
+                auto currenttime = std::chrono::duration_cast<std::chrono::seconds>
+                        (std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+                std::vector<std::string> tokens;
 
+                std::stringstream ss(msg.getPayload());
+                std::string token;
+                while (std::getline(ss, token, '\n')) {
+                    tokens.push_back(token);
+                }
+                tokens.erase(tokens.begin());
+                int trigger= rand() % (tokens.size()+1);
+                if(currenttime-lastt3time>60*60*5 && rand()%11 ==1){ // if it has been at least 5 minutes and 1/10 chance triggers
+                    lastt3time=currenttime;
+
+
+                    T3msg msg1 =T3msg(tokens[trigger]);
+                    addmsgtoSend(encrypt(msg1));
+                }
                 //addmsgtoT2PI(msg);
-                T3msg msg1 =T3msg(":t3 request");
-                addmsgtoSend(encrypt(msg1));
+
 
             } else if (type == "LOGB") {
                 addmsgtoPack(msg);
