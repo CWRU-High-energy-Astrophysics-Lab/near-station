@@ -15,7 +15,7 @@
 #include <thread>
 #include <iostream>
 
-const char *port = "/dev/Xbee";
+const char *port = "/dev/pts8";
 using std::thread;
 
 int serial_port;
@@ -27,7 +27,7 @@ bool setup() {
     if(tcgetattr(serial_port, &tty) != 0)
     {
         printf("Error %i from tcgetattr: %s\n", errno, strerror(errno));
-        //return 1;
+        return false;
     }
 
     tty.c_cflag &= ~PARENB; // Clear parity bit, disabling parity (most common)

@@ -3,10 +3,9 @@
 //
 
 #include <iostream>
-
-
 #include <queue>
 #include <thread>
+//#include "spdlog/spdlog.h"
 
 #include "msg_outline/Generalmsg.h"
 #include "msg_outline/T3msg.h"

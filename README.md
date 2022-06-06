@@ -5,7 +5,8 @@
 git
 cmake
 boost
-libasio-dev 
+libasio-dev
+libspdlog-dev
 
 
 
